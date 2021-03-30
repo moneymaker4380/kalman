@@ -10,7 +10,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78e5d9e3-6bcd-4760-84f5-3baa2975d68d" name="Default Changelist" comment="" />
+    <list default="true" id="78e5d9e3-6bcd-4760-84f5-3baa2975d68d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,7 +59,7 @@
       <option name="presentableId" value="Default" />
       <updated>1617091473559</updated>
       <workItem from="1617091474854" duration="1268000" />
-      <workItem from="1617092766862" duration="831000" />
+      <workItem from="1617092766862" duration="1138000" />
     </task>
     <task id="LOCAL-00001" summary="setup trial1">
       <created>1617093534447</created>
@@ -80,7 +82,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617093684198</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="setup trial2">
+      <created>1617093760525</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1617093760525</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

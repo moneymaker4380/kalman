@@ -10,9 +10,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78e5d9e3-6bcd-4760-84f5-3baa2975d68d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-    </list>
+    <list default="true" id="78e5d9e3-6bcd-4760-84f5-3baa2975d68d" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,8 +57,30 @@
       <option name="presentableId" value="Default" />
       <updated>1617091473559</updated>
       <workItem from="1617091474854" duration="1268000" />
-      <workItem from="1617092766862" duration="528000" />
+      <workItem from="1617092766862" duration="831000" />
     </task>
+    <task id="LOCAL-00001" summary="setup trial1">
+      <created>1617093534447</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1617093534447</updated>
+    </task>
+    <task id="LOCAL-00002" summary="setup trial1">
+      <created>1617093557725</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1617093557725</updated>
+    </task>
+    <task id="LOCAL-00003" summary="setup trial2">
+      <created>1617093684198</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1617093684198</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -78,11 +98,16 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="setup trial1" />
+    <MESSAGE value="setup trial2" />
+    <option name="LAST_COMMIT_MESSAGE" value="setup trial2" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="311" y="43" key="CommitChangelistDialog2" timestamp="1617092815408">
+    <state x="311" y="43" key="CommitChangelistDialog2" timestamp="1617093684084">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="311" y="43" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1617092815408" />
+    <state x="311" y="43" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1617093684084" />
     <state x="229" y="86" key="SettingsEditor" timestamp="1617091894551">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

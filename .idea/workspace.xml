@@ -11,7 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78e5d9e3-6bcd-4760-84f5-3baa2975d68d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +48,11 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -59,7 +64,9 @@
       <option name="presentableId" value="Default" />
       <updated>1617091473559</updated>
       <workItem from="1617091474854" duration="1268000" />
-      <workItem from="1617092766862" duration="1138000" />
+      <workItem from="1617092766862" duration="1221000" />
+      <workItem from="1617094113858" duration="50000" />
+      <workItem from="1617094258651" duration="206000" />
     </task>
     <task id="LOCAL-00001" summary="setup trial1">
       <created>1617093534447</created>
@@ -89,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617093760525</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="setup trial2">
+      <created>1617094052555</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1617094052555</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,14 +127,14 @@
     <option name="LAST_COMMIT_MESSAGE" value="setup trial2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="311" y="43" key="CommitChangelistDialog2" timestamp="1617093684084">
+    <state x="311" y="43" key="CommitChangelistDialog2" timestamp="1617094052437">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="311" y="43" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1617093684084" />
-    <state x="229" y="86" key="SettingsEditor" timestamp="1617091894551">
+    <state x="311" y="43" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1617094052437" />
+    <state x="229" y="86" key="SettingsEditor" timestamp="1617094554594">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="229" y="86" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1617091894551" />
+    <state x="229" y="86" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1617094554594" />
     <state x="602" y="298" key="cloudConfig.SelfSettingsDialog" timestamp="1617091515545">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

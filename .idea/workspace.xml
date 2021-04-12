@@ -10,7 +10,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78e5d9e3-6bcd-4760-84f5-3baa2975d68d" name="Default Changelist" comment="">
+    <list default="true" id="78e5d9e3-6bcd-4760-84f5-3baa2975d68d" name="Default Changelist" comment="setup trial2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +66,9 @@
       <workItem from="1617091474854" duration="1268000" />
       <workItem from="1617092766862" duration="1221000" />
       <workItem from="1617094113858" duration="50000" />
-      <workItem from="1617094258651" duration="206000" />
+      <workItem from="1617094258651" duration="351000" />
+      <workItem from="1617940491729" duration="60000" />
+      <workItem from="1617949247914" duration="9000" />
     </task>
     <task id="LOCAL-00001" summary="setup trial1">
       <created>1617093534447</created>
@@ -103,7 +105,21 @@
       <option name="project" value="LOCAL" />
       <updated>1617094052555</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="setup trial2">
+      <created>1617094559801</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1617094559801</updated>
+    </task>
+    <task id="LOCAL-00007" summary="setup trial2">
+      <created>1617094635825</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1617094635825</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,14 +143,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="setup trial2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="311" y="43" key="CommitChangelistDialog2" timestamp="1617094052437">
+    <state x="311" y="43" key="CommitChangelistDialog2" timestamp="1617940542346">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="311" y="43" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1617094052437" />
+    <state x="311" y="43" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1617940542346" />
     <state x="229" y="86" key="SettingsEditor" timestamp="1617094554594">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="229" y="86" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1617094554594" />
+    <state x="320" y="174" key="Vcs.Push.Dialog.v2" timestamp="1617094666003">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="174" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1617094666003" />
     <state x="602" y="298" key="cloudConfig.SelfSettingsDialog" timestamp="1617091515545">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

@@ -6,10 +6,17 @@ import pandas as pd
 from pykalman import KalmanFilter
 import statsmodels.sandbox.tools.tools_pca as spca
 import statsmodels.api as ols
+import backtrader as bt
 from matplotlib import pyplot as plt
 
 if __name__ == "__main__":
-    ...
+    # Create a cerebro entity
+    cerebro1 = bt.Cerebro()
+    cerebro1.broker.setcash(10000000.0)
+
+    print('Starting Portfolio Value: %.2f' % cerebro1.broker.getvalue())
+
+    print('Final Portfolio Value: %.2f' % cerebro1.broker.getvalue())
 
 xreduced, factors, evals, evecs =spca.pca(data=return, keepdim=I)
 factors = ols.add_constant(factors)

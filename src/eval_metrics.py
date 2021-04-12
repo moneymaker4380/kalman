@@ -1,8 +1,8 @@
 
 
 class EvalMetrics:
-    def __init__(self):
-        pass
+    def __init__(self,return):
+        self.ar
 
     def sharpe(self):
         pass

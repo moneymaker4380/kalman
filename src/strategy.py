@@ -41,5 +41,7 @@ data = bt.feeds.PandasData(dataname=df0,
 cerebro.adddata(data) 
 cerebro.addstrategy(TestStrategy)
 cerebro.broker.set_cash(cash=10000000)
+print(f"Starting Portfolio Value: {cerebro.broker.getvalue():.2f}")
 cerebro.run()
-cerebro.plot() 
+print(f"Final Portfolio Value: {cerebro.broker.getvalue():.2f}")
+cerebro.plot()

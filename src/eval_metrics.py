@@ -1,20 +1,32 @@
-
+from scipy.stats import norm
 
 class EvalMetrics:
-    def __init__(self,return):
-        self.ar
+    def __init__(self,rfrate,simplereturn,ar,day):
+        self.rfrate = 0.017
+        self.simplereturn = df0.pct_change().dropna()
+        self.ar 
+        self.day = 260
 
     def sharpe(self):
-        pass
+        Sharpe = ((self.simplereturn.mean() - self.rfrate) / self.simplereturn.std())
+        return Sharpe
 
     def sortino(self):
-        pass
+        downsidereturn = df0.loc[df0['returns'] < 0.0]
+        Sortino = ((self.simplereturn.mean() - self.rfrate) / downsidereturn.std())
+        return Sortino
 
     def calmar(self):
-        pass
+        Calmar = self.ar/self.md()
+        return Calmar
 
     def cvar(self):
-        pass
+        alpha = 0.01
+        CVaR = alpha**(-1) * norm.pdf(norm.ppf(alpha))*self.simplereturn.std() - self.simplereturn.mean()
+        return CVaR
 
     def md(self):
-        pass
+        RollMax = self.simplereturn.cummax()
+        DailyDrawdown = self.simplereturn/RollMax - 1.0
+        MD = DailyDrawdown.cummin()
+        return MD

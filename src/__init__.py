@@ -31,3 +31,15 @@ kf = KalmanFilter(n_dim_obs=1, n_dim_state=factors.shape[1],
                   em_vars='transition_covariance, observation_covariance,'
                           'initial_state_mean, initial_state_covariance')
 
+from sklearn.decomposition import PCA
+pca = PCA(n_components = 6) 
+pca.fit(return0) 
+pca.explained_variance_ratio_.cumsum()
+print('The shape of the array after PCA is: ' , pca.components_.T.shape)
+
+cov_mat = np.cov(return1)
+eigen_vals, eigen_vecs = np.linalg.eig(cov_mat)
+tot = sum(eigen_vals)
+var_exp = [(i / tot) for i in sorted(eigen_vals, reverse=True)]
+cum_var_exp = np.cumsum(var_exp)
+print(cum_var_exp）

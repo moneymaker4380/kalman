@@ -18,6 +18,7 @@ if __name__ == "__main__":
 
     print('Final Portfolio Value: %.2f' % cerebro1.broker.getvalue())
 
+#Kalman Filter
 xreduced, factors, evals, evecs =spca.pca(data=return, keepdim=I)
 factors = ols.add_constant(factors)
 obs_matrix = np.array(factors)[:,np.newaxis]

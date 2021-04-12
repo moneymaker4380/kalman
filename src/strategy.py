@@ -40,6 +40,7 @@ data = bt.feeds.PandasData(dataname=df0,
                           )
 cerebro.adddata(data) 
 cerebro.addstrategy(TestStrategy)
+cerebro.broker.setcommission(commission=0.0)
 cerebro.broker.set_cash(cash=10000000)
 print('Starting Portfolio Value: %.2f' % cerebro1.broker.getvalue())
 cerebro.run()

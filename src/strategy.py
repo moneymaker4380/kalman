@@ -1,12 +1,12 @@
+import numpy as np
 import backtrader as bt
 from datetime import datetime
-import numpy as np
 
 class Strategy(bt.Strategy):
     def __int__(self):
         pass
     
-#cointegration
+###cointegration
 from statsmodels.tsa.stattools import coint
 def find_cointegrated_pairs(data):
     n = data.shape[1]
@@ -21,7 +21,7 @@ def find_cointegrated_pairs(data):
                 pairs.append((keys[i], keys[j]))
     return pvalue_matrix, pairs
 
-#ADF
+###ADF
 from statsmodels.tsa.stattools import adfuller
 spread = train.asset2 - model.params[0] * train.asset1
 adf = adfuller(spread, maxlag = 1)
@@ -32,7 +32,7 @@ print(adf[4])
 def z_score(series):
  return ((series - np.mean(series)) / np.std(series))
 
-#cerebro
+###cerebro
 cerebro = bt.Cerebro()
 data = bt.feeds.PandasData(dataname=df0,
                            fromdate = datetime.datetime(2006, 1, 2),

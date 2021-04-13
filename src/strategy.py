@@ -4,7 +4,7 @@ import scipy.odr as odr
 from datetime import datetime
 
 class Strategy(bt.Strategy):
-    def __int__(self):
+    def __init__(self):
         pass
 
     def next(self):

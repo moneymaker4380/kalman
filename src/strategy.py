@@ -23,10 +23,10 @@ def find_cointegrated_pairs(data):
 
 ###ADF
 from statsmodels.tsa.stattools import adfuller
-spread = train.asset2 - model.params[0] * train.asset1
+#eg spread = train.asset2 - model.params[0] * train.asset1
 adf = adfuller(spread, maxlag = 1)
-print('Critical Value = ', adf[0])
-# probablity critical values
+print('ADF Statistic: = ', adf[0])
+#critical values
 print(adf[4])
 
 def z_score(series):

@@ -6,6 +6,7 @@ class Strategy(bt.Strategy):
     def __int__(self):
         pass
     
+    
 ###cointegration
 from statsmodels.tsa.stattools import coint
 def find_cointegrated_pairs(data):
@@ -21,6 +22,20 @@ def find_cointegrated_pairs(data):
                 pairs.append((keys[i], keys[j]))
     return pvalue_matrix, pairs
 
+
+#TLS
+import scipy.odr as odr
+def odr_line(p, x):
+    """The line of best fit."""
+    #unpack the parameters:
+    y = p*x
+    return y
+linear = odr.Model(odr_line)
+mydata = odr.Data(x, y, wd=1./xerror, we=1./yerror)
+myodr = odr.ODR(mydata, linear, beta0=[0])
+output = myodr.run()
+
+
 ###ADF
 from statsmodels.tsa.stattools import adfuller
 #eg spread = train.asset2 - model.params[0] * train.asset1
@@ -33,6 +48,7 @@ print(adf[4])
 
 def z_score(series):
  return ((series - np.mean(series)) / np.std(series))
+
 
 ###cerebro
 cerebro = bt.Cerebro()

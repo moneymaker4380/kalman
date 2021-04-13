@@ -3,7 +3,7 @@ import backtrader as bt
 from datetime import datetime
 
 class Strategy(bt.Strategy):
-    def __int__(self):
+    def __init__(self):
         pass
     
     

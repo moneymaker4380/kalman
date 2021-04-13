@@ -1,11 +1,15 @@
 import numpy as np
 import backtrader as bt
+import scipy.odr as odr
 from datetime import datetime
 
 class Strategy(bt.Strategy):
     def __int__(self):
         pass
-    
+
+    def next(self):
+        pass
+
     
 ###cointegration
 from statsmodels.tsa.stattools import coint
@@ -24,7 +28,7 @@ def find_cointegrated_pairs(data):
 
 
 #TLS
-import scipy.odr as odr
+
 def odr_line(p, x):
     """The line of best fit."""
     #unpack the parameters:

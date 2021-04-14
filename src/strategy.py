@@ -57,8 +57,8 @@ def z_score(series):
 ###cerebro
 cerebro = bt.Cerebro()
 data = bt.feeds.PandasData(dataname=df0,
-                           fromdate = datetime.datetime(2006, 1, 2),
-                           todate = datetime.datetime(2020, 12, 31)
+                           fromdate = datetime(2006, 1, 2),
+                           todate = datetime(2020, 12, 31)
                           )
 cerebro.adddata(data) 
 cerebro.addstrategy(TestStrategy)

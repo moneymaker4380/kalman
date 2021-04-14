@@ -28,14 +28,15 @@ def find_cointegrated_pairs(data):
 
 
 #TLS
-def odr_line(p, x):
+def odr_line(z, x):
+    #Define a function to fit the data with.  
     """The line of best fit."""
-    #unpack the parameters:
-    y = p*x
+    m, c = z
+    y = m*x +c
     return y
 linear = odr.Model(odr_line)
 mydata = odr.Data(x, y, wd=1./xerror, we=1./yerror)
-myodr = odr.ODR(mydata, linear, beta0=[0])
+myodr = odr.ODR(mydata, linear, beta0=[0]) #can be beta0=[0., 1.]
 output = myodr.run()
 
 

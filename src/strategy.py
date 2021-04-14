@@ -11,8 +11,12 @@ class Strategy(bt.Strategy):
         pass
     
     def next(self):
-        next_long
-        next_short
+        if not self.position:  #not in the market
+            if next_long > 0:  
+                self.buy()  #enter long position
+
+        elif next_short < 0:  
+            self.close()  #close long position
         pass
     
 ###cointegration

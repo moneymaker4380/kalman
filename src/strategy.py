@@ -10,9 +10,9 @@ class Strategy(bt.Strategy):
     def next(self):
         pass
     
-    def signal(self):
-        signal_long
-        signal_short
+    def next(self):
+        next_long
+        next_short
         pass
     
 ###cointegration

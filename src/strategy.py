@@ -28,7 +28,6 @@ def find_cointegrated_pairs(data):
 
 
 #TLS
-
 def odr_line(p, x):
     """The line of best fit."""
     #unpack the parameters:

@@ -9,7 +9,11 @@ class Strategy(bt.Strategy):
 
     def next(self):
         pass
-
+    
+    def signal(self):
+        signal_long
+        signal_short
+        pass
     
 ###cointegration
 from statsmodels.tsa.stattools import coint

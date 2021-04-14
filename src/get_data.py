@@ -21,6 +21,8 @@ class GetData:
                          'low':self.ETF_PX_LOW,'vwap_volume':self.ETF_VWAP_VOLUME,
                          'fund_net_asset_value':self.ETF_FUND_NET_ASSET_VAL,
                          'equity_weighted_average_price':self.ETF_EQY_WEIGHTED_AVG_PX}
+        for i in self.etf_dict:
+            self.etf_dict[i] = self.etf_dict[i].loc[:,~self.etf_dict[i].columns.duplicated()]
         pass
     
     def get_stock(self,ticker,prop):

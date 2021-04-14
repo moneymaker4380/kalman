@@ -69,6 +69,7 @@ cerebro.addstrategy(TestStrategy)
 cerebro.broker.setcommission(commission=0.0)
 cerebro.broker.set_cash(cash=10000000)
 print('Starting Portfolio Value: %.2f' % cerebro1.broker.getvalue())
+import backtrader.analyzers as btanalyzers
 cerebro.addanalyzer(bt.analyzers.Calmar, _name = 'Calmar')
 cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name = 'SharpeRatio')
 cerebro.addanalyzer(bt.analyzers.DrawDown, _name='DD')

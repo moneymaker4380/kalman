@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import os
+import backtrader as bt
 """            
         self.stock_dict = {'last':[self.STOCK_PX_LAST, 'PX_LAST'],'volume':[self.STOCK_PX_VOLUME,'PX_VOLUME'],
                            'equity_weighted_average_price':[self.STOCK_EQY_WEIGHTED_AVG_PX, 'EQY_WEIGHTED_AVG_PX']}
@@ -42,6 +43,32 @@ class GetData:
         for prop in self.etf_dict:
             temp = temp.append(self.etf_dict[prop].loc[:,ticker].rename(prop))
         return temp.T
+    
+    def cerebro_stock(self,ticker):
+        df = self.get_stock_all(ticker).iloc[:,:2]
+        return StockFeed(df)
+    
+    def cerebro_etf(self,ticker):
+        df = self.get_etf_all(ticker).iloc[:,:5]
+        return EtfFeed(df)
         
   
-  
+class StockFeed(bt.feeds.DataBase):
+    params = (
+        ('open', None),
+        ('high', None),
+        ('low', None),
+        ('close', 0),
+        ('volume', 1),
+        ('openinterest', None)
+    )  
+
+class EtfFeed(bt.feeds.DataBase):
+    params = (
+        ('open', 3),
+        ('high', 2),
+        ('low', 4),
+        ('close', 0),
+        ('volume', 1),
+        ('openinterest', None)
+    ) 

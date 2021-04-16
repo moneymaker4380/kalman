@@ -39,7 +39,7 @@ def odr_line(z, x):
     #Define a function to fit the data with.  
     """The line of best fit."""
     m, c = z
-    y = m*x +c
+    y = m*x + c
     return y
 linear = odr.Model(odr_line)
 mydata = RealData(x, y, sx=sx, sy=sy)

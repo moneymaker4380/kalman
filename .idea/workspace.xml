@@ -11,8 +11,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78e5d9e3-6bcd-4760-84f5-3baa2975d68d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/kalman.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/strategy.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/strategy.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +76,8 @@
       <workItem from="1618209684298" duration="2732000" />
       <workItem from="1618222999320" duration="297000" />
       <workItem from="1618226242552" duration="881000" />
-      <workItem from="1618340338344" duration="3014000" />
+      <workItem from="1618340338344" duration="3292000" />
+      <workItem from="1618582792899" duration="4133000" />
     </task>
     <task id="LOCAL-00001" summary="setup trial1">
       <created>1617093534447</created>
@@ -204,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618231277521</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="setup trial2">
+      <created>1618344923124</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1618344923124</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,10 +240,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="412" y="256" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1618212773946" />
-    <state x="311" y="43" key="CommitChangelistDialog2" timestamp="1618231277335">
+    <state x="311" y="43" key="CommitChangelistDialog2" timestamp="1618344922978">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="311" y="43" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1618231277335" />
+    <state x="311" y="43" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1618344922978" />
     <state x="144" y="76" key="MergeDialog" timestamp="1618222942063">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -252,9 +260,9 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="602" y="298" key="cloudConfig.SelfSettingsDialog/0.0.1440.900@0.0.1440.900" timestamp="1617091515545" />
-    <state x="511" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1618340341078">
+    <state x="511" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1618588952086">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="511" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1618340341078" />
+    <state x="511" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1618588952086" />
   </component>
 </project>

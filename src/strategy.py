@@ -1,13 +1,17 @@
 import numpy as np
+import pandas as pd
 import backtrader as bt
 import scipy.odr as odr
 from datetime import datetime
 
 class Strategy(bt.Strategy):
     def __init__(self):
+        self.pair_kalman = {}
+        self.pair_betas = {}
         pass
 
-    def next(self):
+    def nextstart(self):
+        #initialize pairs
         pass
     
     def next(self):
@@ -16,6 +20,21 @@ class Strategy(bt.Strategy):
                 self.buy()  #enter long position
             elif next_short < 0:  
                 self.close()  #close long position
+        pass
+
+    def coint_test(self, stock_df, etf_df):
+        stockR = np.log(stock_df.div(stock_df[0]))
+        etfR = np.log(etf_df.div(etf_df[0]))
+
+        return betas, n_lags, t_stat,
+
+    def init_kalman(self, name, error_df, n_lags):
+        lags = list(map(lambda x: error_df - error_df.shift(x), range(1,n_lags+1)))
+        obs = pd.concat([error_df.shift(1), error_df])
+        kf = KalmanFilter(n_dim_obs=1, n_dim_state=factors.shape[1],
+                          transition_matrices=np.eye(factors.shape[1]),
+                          observation_matrices=obs_matrix,
+                          em_vars='transition_covariance, observation_covariance,''initial_state_mean, initial_state_covariance')
         pass
     
 ###cointegration

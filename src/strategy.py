@@ -42,7 +42,7 @@ def odr_line(z, x):
     y = m*x +c
     return y
 linear = odr.Model(odr_line)
-mydata = odr.Data(x, y, wd=1./xerror, we=1./yerror)
+mydata = RealData(x, y, sx=sx, sy=sy)
 myodr = odr.ODR(mydata, linear, beta0=[0]) #can be beta0=[0., 1.]
 output = myodr.run()
 

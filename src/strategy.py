@@ -31,7 +31,7 @@ def find_cointegrated_pairs(data):
             pvalue_matrix[i, j] = result[1]
             if result[1] < 0.05:
                 pairs.append((keys[i], keys[j]))
-    return pvalue_matrix, pairs
+    return pvalue_matrix, pairs #return p=lag, statistics
 
 
 #TLS
@@ -48,6 +48,7 @@ output = myodr.run()
 
 
 ###ADF
+#set maxlag=0?
 from statsmodels.tsa.stattools import adfuller
 #eg spread = train.asset2 - model.params[0] * train.asset1
 adf = adfuller(spread, maxlag = 1)

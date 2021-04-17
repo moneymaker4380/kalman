@@ -18,6 +18,10 @@ if __name__ == "__main__":
     cerebro1.broker.setcash(10000000.0)
 
     data = GetData()
+    # for ticker in data.etf_list():
+    #     stock = data.cerebro_stock(ticker)
+    #     cerebro1.adddata(stock)
+
     aapl = data.cerebro_stock('AAPL')
     #data0 = bt.feeds.YahooFinanceData(dataname='MSFT', fromdate=datetime(2011, 1, 1), todate=datetime(2012, 12, 31))
 

@@ -21,7 +21,7 @@ class Coint:
     def regression(self):
         x = self.stock_ret.to_numpy()
         y = self.etf_ret.T.to_numpy()
-        linmod = odr.Model(linfit)
+        linmod = odr.Model(odr.multilinear.fcn)
         data = odr.Data(x, y)
         odrfit = odr.ODR(data, linmod, beta0=[1., 1., 1.])
         odrres = odrfit.run()

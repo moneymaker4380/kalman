@@ -36,3 +36,6 @@ class Kalman:
         self.mean = new_m.data
         self.cov = new_cov
         pass
+
+    def tstat(self):
+        return self.mean[1]/np.sqrt(self.cov[1,1])

@@ -14,7 +14,13 @@ class Coint:
         pass
 
     def regression(self):
-        odr.multilinear.fcn
+        y = self.stock_ret.to_numpy()
+        y = self.etf_ret.T.to_numpy()
+        linmod = odr.Model(linfit)
+        data = odr.Data(x, y)
+        odrfit = odr.ODR(data, linmod, beta0=[1., 1., 1.])
+        odrres = odrfit.run()
+        odrres.pprint()
         pass
 
     def adf(self):

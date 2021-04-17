@@ -8,12 +8,12 @@ class EvalMetrics:
         self.day = 260
 
     def sharpe(self):
-        Sharpe = ((self.simplereturn.mean() - self.rfrate) / self.simplereturn.std())
+        Sharpe = ((self.logreturn.mean() - self.rfrate) / logreturn.std())
         return Sharpe
 
     def sortino(self):
         downsidereturn = df0.loc[df0['returns'] < 0.0]
-        Sortino = ((self.simplereturn.mean() - self.rfrate) / downsidereturn.std())
+        Sortino = ((self.logreturn.mean() - self.rfrate) / downsidereturn.std())
         return Sortino
 
     def calmar(self):
@@ -22,11 +22,11 @@ class EvalMetrics:
 
     def cvar(self):
         alpha = 0.01
-        CVaR = alpha**(-1) * norm.pdf(norm.ppf(alpha))*self.simplereturn.std() - self.simplereturn.mean()
+        CVaR = alpha**(-1) * norm.pdf(norm.ppf(alpha))*self.logreturn.std() - self.logreturn.mean()
         return CVaR
 
     def md(self):
-        RollMax = self.simplereturn.cummax()
-        DailyDrawdown = self.simplereturn/RollMax - 1.0
+        RollMax = self.logreturn.cummax()
+        DailyDrawdown = self.logreturn/RollMax - 1.0
         MD = DailyDrawdown.cummin()
         return MD

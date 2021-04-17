@@ -5,6 +5,12 @@ from get_data import GetData
 class Coint:
     def __init__(self,stock,etfs):
         data = GetData()
+        #should be called in sth like next() in strat
+        feed_dict = dict()
+        for i,d in enumerate(self.datas):
+            feed_dict[d._name] = i
+        #print(self.datas[dick['AAPL']].close[0])
+        ############################### Draft only #################################
         self.stock_ret = data.get_stock(stock,'last').pct_change().dropna()
         ret_list = []
         for etf in etfs:

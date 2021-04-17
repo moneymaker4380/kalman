@@ -24,6 +24,9 @@ class GetData:
                          'equity_weighted_average_price':self.ETF_EQY_WEIGHTED_AVG_PX}
         pass
     
+    def stock_list(self):
+        return self.STOCK_PX_LAST.columns.to_list()
+    
     def get_stock(self,ticker,prop):
         df = self.stock_dict[prop]
         return df.loc[:,ticker]
@@ -33,6 +36,9 @@ class GetData:
         for prop in self.stock_dict:
             temp = temp.append(self.stock_dict[prop].loc[:,ticker].rename(prop))
         return temp.T
+    
+    def etf_list(self):
+        return self.ETF_PX_LAST.columns.to_list()
     
     def get_etf(self,ticker,prop):
         df = self.etf_dict[prop]

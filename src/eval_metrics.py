@@ -3,7 +3,7 @@ from scipy.stats import norm
 class EvalMetrics:
     def __init__(self,rfrate,simplereturn,ar,day):
         self.rfrate = 0.017
-        self.logreturn 
+        self.logreturn = log_return
         self.ar 
         self.day = 260
 

@@ -47,7 +47,7 @@ class Strategy(bt.Strategy):
         pass
 
     def next(self):
-        for i, d in enumerate(self.datas):
+        for i, d in enumerate(self.datas[:-1]):
             self.log('Close, %.2f' % d.close[0])
             if len(self) % (252) == (0):
                 self.buy(d,size=10000)

@@ -29,12 +29,13 @@ if __name__ == "__main__":
     pep = data.cerebro_stock('PEP')
     cerebro1.adddata(pep, name='PEP')
 
-    # ko = data.cerebro_stock('KO')
-    # cerebro1.adddata(ko, name='KO')
+    ko = data.cerebro_stock('KO')
+    cerebro1.adddata(ko, name='KO')
 
-    #data0 = bt.feeds.YahooFinanceData(dataname='MSFT', fromdate=datetime(2011, 1, 1), todate=datetime(2012, 12, 31))
-    #cerebro1.adddata(data0, name='KO')
-
+    # data0 = bt.feeds.YahooFinanceData(dataname='SPY', fromdate=datetime(2006, 1, 1), todate=datetime(2020, 12, 31))
+    # cerebro1.adddata(data0, name='SPY')
+    # cerebro1.addobserver(bt.observers.Benchmark,
+    #                          data=data0)
 
     cerebro1.addstrategy(Strategy)
 
@@ -44,6 +45,9 @@ if __name__ == "__main__":
     cerebro1.addanalyzer(bt.analyzers.AnnualReturn, _name='Return')
     cerebro1.addanalyzer(bt.analyzers.TimeReturn, _name='CumulativeReturn')
     cerebro1.addanalyzer(bt.analyzers.PeriodStats, _name='Stats')
+
+    cerebro1.addobserver(bt.observers.TimeReturn)
+    cerebro1.addobserver(bt.observers.DrawDown)
 
     print('Starting Portfolio Value: %.2f' % cerebro1.broker.getvalue())
     run_time = cerebro1.run()
@@ -56,7 +60,10 @@ if __name__ == "__main__":
     print('Calmar Ratio:', run.analyzers.Calmar.calmar)
     print('Annualized Volatility:', run.analyzers.Stats.get_analysis()['stddev'])
 
+
+
     print('Final Portfolio Value: %.2f' % cerebro1.broker.getvalue())
+# factors = ols.add_constant(factors)
 
     cerebro1.plot(iplot=False)
 
@@ -64,7 +71,6 @@ if __name__ == "__main__":
 # #Kalman Filter
 # xreduced, factors, evals, evecs =spca.pca(data=return, keepdim=I)
 #
-# factors = ols.add_constant(factors)
 #
 # obs_matrix = np.array(factors)[:,np.newaxis]
 #

@@ -4,7 +4,8 @@ class EvalMetrics:
     def __init__(self,rfrate,simplereturn,ar,day):
         self.rfrate = 0.017
         self.logreturn = log_return
-        self.ar 
+        self.ar
+        self.nav
         self.day = 260
 
     def sharpe(self):

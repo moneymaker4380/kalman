@@ -22,12 +22,15 @@ class Kalman:
                                observation_matrices = self.obs.to_numpy()[:,np.newaxis],
                                observation_covariance = error_cov,
                                em_vars='transition_covariance, initial_state_mean, initial_state_covariance')
-        self.kf.
+        means, covs = self.kf.filter(self.error_df)
+        self.mean = means[-1]
+        self.cov = covs[-1]
         pass
 
     def update(self, eNew, timestamp):
         self.error_df.append(pd.DataFrame(eNew, index=timestamp))
-        obs = [self.error_df.shift(1)[-1]]
-        obs.extend([self.error_df.diff().shift(i)[-1] for i in range(1,self.p_lags)])
-        obs.append(list(map(lambda x: eNew)))
+        obs = [1,self.error_df.shift(1).iloc[-1].squeeze()]
+        obs.extend([self.error_df.diff().shift(i).iloc[-1].squeeze for i in range(1,self.p_lags+1)])
+        obs = np.array(obs)[np.newaxis]
+        new_m, new_cov =
         pass

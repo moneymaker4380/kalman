@@ -62,10 +62,9 @@ output = myodr.run()
 
 
 ###ADF
-#set maxlag=0?
 from statsmodels.tsa.stattools import adfuller
-#eg spread = train.asset2 - model.params[0] * train.asset1
-adf = adfuller(spread, maxlag = 1)
+adf = adfuller(spread, maxlag = 1) #eg spread = train.asset2 - model.params[0] * train.asset1
+#set maxlag=0?
 #or adf = adfuller(spread, autolag='BIC')
 print('ADF Statistic: ', adf[0])
 print('p-value: ', adf[1])

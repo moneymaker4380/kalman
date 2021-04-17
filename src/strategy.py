@@ -3,6 +3,7 @@ import pandas as pd
 import backtrader as bt
 import scipy.odr as odr
 from datetime import datetime
+from log_return import LogReturn
 
 
 class Strategy(bt.Strategy):
@@ -16,6 +17,7 @@ class Strategy(bt.Strategy):
         self.pair_kalman = {}
         self.pair_betas = {}
         self.dataclose = self.datas[0].close
+        self.logreturn = LogReturn(self.datas[0])
         pass
 
     def nextstart(self):

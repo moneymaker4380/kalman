@@ -27,6 +27,10 @@ class GetData:
     def stock_list(self):
         return self.STOCK_PX_LAST.columns.to_list()
     
+    def get_stock_list(self):
+        df = self.stock_dict['last']
+        return list(df.columns)
+
     def get_stock(self,ticker,prop):
         df = self.stock_dict[prop]
         return df.loc[:,ticker]
@@ -68,7 +72,8 @@ class StockFeed(bt.feeds.PandasData):
         ('close', 0),
         ('volume', 1),
         ('vwap',2),
-        ('openinterest', None)
+        ('openinterest', None),
+        ('timeframe', bt.TimeFrame.Days),
     )  
 
 class EtfFeed(bt.feeds.DataBase):

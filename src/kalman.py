@@ -19,9 +19,10 @@ class Kalman:
         self.obs = pd.concat(self.obs, axis=1)
         self.obs.fillna(0, inplace=True)
         self.kf = KalmanFilter(transition_matrices = np.eye(2 + self.p_lags - 1 ),
-                               observation_matrices = self.obs.to_numpy(dtype=int)[:,np.newaxis],
+                               observation_matrices = self.obs.to_numpy()[:,np.newaxis],
                                observation_covariance = error_cov,
                                em_vars='transition_covariance, initial_state_mean, initial_state_covariance')
+        self.kf.
         pass
 
     def update(self, eNew, timestamp):

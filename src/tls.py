@@ -1,13 +1,19 @@
 import scipy.odr as odr
 from statsmodels.tsa.stattools import adfuller
-
-
+from get_data import GetData
 
 class TLS:
-    def __init__(self):
+    def __init__(self,stock,etfs):
+        data = GetData()
+        self.stock_ret = data.get_stock(stock,'last').pct_change().dropna()
+        ret_list = []
+        for etf in etfs:
+            ret = data.get_etf(etf,'last').pct_change().dropna()
+            ret_list.append(ret)
+        self.etf_ret = pd.DataFrame(ret_list).T
         pass
 
-    def regression(self, y, x):
+    def regression(self):
         odr.multilinear.fcn
         pass
 

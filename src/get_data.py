@@ -45,21 +45,23 @@ class GetData:
         return temp.T
     
     def cerebro_stock(self,ticker):
-        df = self.get_stock_all(ticker).iloc[:,:2]
-        return StockFeed(df)
+        df = self.get_stock_all(ticker).iloc[:,:3]
+        return StockFeed(dataname=df)
     
     def cerebro_etf(self,ticker):
-        df = self.get_etf_all(ticker).iloc[:,:5]
+        df = self.get_etf_all(ticker).iloc[:,:6]
         return EtfFeed(df)
         
   
-class StockFeed(bt.feeds.DataBase):
+class StockFeed(bt.feeds.PandasData):
+    lines = ('close','volume','vwap')
     params = (
         ('open', None),
         ('high', None),
         ('low', None),
         ('close', 0),
         ('volume', 1),
+        ('vwap',2),
         ('openinterest', None)
     )  
 

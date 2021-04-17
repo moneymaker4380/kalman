@@ -2,7 +2,7 @@ import scipy.odr as odr
 from statsmodels.tsa.stattools import adfuller
 from get_data import GetData
 
-class TLS:
+class Coint:
     def __init__(self,stock,etfs):
         data = GetData()
         self.stock_ret = data.get_stock(stock,'last').pct_change().dropna()

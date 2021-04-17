@@ -3,7 +3,7 @@ from scipy.stats import norm
 class EvalMetrics:
     def __init__(self,rfrate,simplereturn,ar,day):
         self.rfrate = 0.017
-        self.simplereturn = df0.pct_change().dropna()
+        self.logreturn 
         self.ar 
         self.day = 260
 

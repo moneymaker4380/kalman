@@ -69,7 +69,7 @@ class Strategy(bt.Strategy):
 #     y = m*x + c
 #     return y
 # linear = odr.Model(odr_line)
-# mydata = RealData(x, y, sx=sx, sy=sy)
+# mydata = RealData(x, y)
 # myodr = odr.ODR(mydata, linear, beta0=[0]) #can be beta0=[0., 1.]
 # output = myodr.run()
 #

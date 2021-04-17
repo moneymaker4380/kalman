@@ -13,11 +13,34 @@ class Strategy(bt.Strategy):
         dt = dt or self.datas[0].datetime.date(0)
         print('%s, %s' % (dt.isoformat(), txt))
 
+    def notify_order(self, order):
+        if order.status in [order.Submitted, order.Accepted]:
+            # Buy/Sell order submitted/accepted to/by broker - Nothing to do
+            return
+
+        # Check if an order has been completed
+        # Attention: broker could reject order if not enough cash
+        if order.status in [order.Completed]:
+            if order.isbuy():
+                self.log('BUY EXECUTED, %.2f' % order.executed.price)
+            elif order.issell():
+                self.log('SELL EXECUTED, %.2f' % order.executed.price)
+
+            self.bar_executed = len(self)
+
+        elif order.status in [order.Canceled, order.Margin, order.Rejected]:
+            self.log('Order Canceled/Margin/Rejected')
+
+
     def __init__(self):
         self.pair_kalman = {}
         self.pair_betas = {}
         self.dataclose = self.datas[0].close
-        self.logreturn = LogReturn(self.datas[0])
+        self.noBuy = False
+        self.inds = dict()
+        for i, d in enumerate(self.datas):
+            self.inds[d] = dict()
+            self.inds[d]['log_return'] = LogReturn(d)
         pass
 
     def nextstart(self):
@@ -25,13 +48,21 @@ class Strategy(bt.Strategy):
         pass
 
     def next(self):
-        self.log('Close, %.2f' % self.dataclose[0])
+        for i, d in enumerate(self.datas):
+            self.log('Close, %.2f' % d.close[0])
+            if not self.noBuy:
+                self.buy(d,size=1000)
+        self.noBuy = True
 
-        # if not self.position:  #not in the market
-        #     if next_long > 0:
-        #         self.buy()  #enter long position
-        #     elif next_short < 0:
-        #         self.close()  #close long position
+
+            #self.log('LogReturn, %.2f' % self.inds[0])
+
+
+            # if not self.position:  #not in the market
+            #     if next_long > 0:
+            #         self.buy()  #enter long position
+            #     elif next_short < 0:
+            #         self.close()  #close long position
         pass
 
 # def coint_test(self, stock_df, etf_df):

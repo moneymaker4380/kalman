@@ -66,13 +66,13 @@ class GetData:
 class StockFeed(bt.feeds.PandasData):
     lines = ('close','volume','vwap')
     params = (
-        ('open', None),
-        ('high', None),
-        ('low', None),
+        ('open', 0),
+        ('high', 0),
+        ('low', 0),
         ('close', 0),
         ('volume', 1),
         ('vwap',2),
-        ('openinterest', None),
+        ('openinterest', -1),
         ('timeframe', bt.TimeFrame.Days),
     )  
 

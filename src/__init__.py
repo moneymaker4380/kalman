@@ -16,6 +16,7 @@ if __name__ == "__main__":
     # Create a cerebro entity
     cerebro1 = bt.Cerebro()
     cerebro1.broker.setcash(10000000.0)
+    cerebro1.broker.set_coc(True)
 
 
     data = GetData()
@@ -24,11 +25,14 @@ if __name__ == "__main__":
     #     print(ticker)
     #     cerebro1.adddata(stock)
 
-    aapl = data.cerebro_stock('AAPL')
-    cerebro1.adddata(aapl)
+    pep = data.cerebro_stock('PEP')
+    cerebro1.adddata(pep, name='PEP')
+
+    # ko = data.cerebro_stock('KO')
+    # cerebro1.adddata(ko, name='KO')
 
     #data0 = bt.feeds.YahooFinanceData(dataname='MSFT', fromdate=datetime(2011, 1, 1), todate=datetime(2012, 12, 31))
-
+    #cerebro1.adddata(data0, name='KO')
 
 
     cerebro1.addstrategy(Strategy)
@@ -36,10 +40,9 @@ if __name__ == "__main__":
     cerebro1.addanalyzer(bt.analyzers.Calmar, _name='Calmar')
     cerebro1.addanalyzer(bt.analyzers.SharpeRatio, _name='SharpeRatio')
     cerebro1.addanalyzer(bt.analyzers.DrawDown, _name='DD')
-    cerebro1.run()
 
     print('Starting Portfolio Value: %.2f' % cerebro1.broker.getvalue())
-
+    cerebro1.run()
     print('Final Portfolio Value: %.2f' % cerebro1.broker.getvalue())
 
     cerebro1.plot(iplot=False)

@@ -7,6 +7,7 @@ from pykalman import KalmanFilter
 import statsmodels.sandbox.tools.tools_pca as spca
 import statsmodels.api as ols
 from datetime import datetime
+from functools import reduce
 import backtrader as bt
 from matplotlib import pyplot as plt
 from strategy import Strategy
@@ -40,18 +41,20 @@ if __name__ == "__main__":
     cerebro1.addanalyzer(bt.analyzers.Calmar, _name='Calmar')
     cerebro1.addanalyzer(bt.analyzers.SharpeRatio, _name='SharpeRatio')
     cerebro1.addanalyzer(bt.analyzers.DrawDown, _name='DD')
-    cerebro1.addanalyzer(bt.analyzers.Returns, _name='Return')
+    cerebro1.addanalyzer(bt.analyzers.AnnualReturn, _name='Return')
     cerebro1.addanalyzer(bt.analyzers.TimeReturn, _name='CumulativeReturn')
+    cerebro1.addanalyzer(bt.analyzers.PeriodStats, _name='Stats')
 
     print('Starting Portfolio Value: %.2f' % cerebro1.broker.getvalue())
     run_time = cerebro1.run()
     run = run_time[0]
 
-    print('Annualized Return:', run.analyzers.Return.get_analysis()['rnorm'])
+    print('Annualized Return:', (reduce(lambda x,y: x*y, [1 + k for i,k in run.analyzers.Return.get_analysis().items()])**(1/15)-1))
     print('Cumulative Return:', run.analyzers.CumulativeReturn.get_analysis()[datetime(2020,12,31)])
     print('Sharpe Ratio:', run.analyzers.SharpeRatio.get_analysis()['sharperatio'])
     print('Maximum Drawdown:', run.analyzers.DD.get_analysis()['max']['drawdown'])
     print('Calmar Ratio:', run.analyzers.Calmar.calmar)
+    print('Annualized Volatility:', run.analyzers.Stats.get_analysis()['stddev'])
 
     print('Final Portfolio Value: %.2f' % cerebro1.broker.getvalue())
 

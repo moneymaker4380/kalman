@@ -32,43 +32,33 @@ class Strategy(bt.Strategy):
         #         self.close()  #close long position
         pass
 
-    def coint_test(self, stock_df, etf_df):
-        stockR = np.log(stock_df.div(stock_df[0]))
-        etfR = np.log(etf_df.div(etf_df[0]))
+# def coint_test(self, stock_df, etf_df):
+#     stockR = np.log(stock_df.div(stock_df[0]))
+#     etfR = np.log(etf_df.div(etf_df[0]))
+#
+#     return betas, n_lags, t_stat,
 
-        return betas, n_lags, t_stat,
-
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 #
 # ###cointegration
 # from statsmodels.tsa.stattools import coint
 # def find_cointegrated_pairs(data):
 #     n = data.shape[1]
 #     pvalue_matrix = np.ones((n, n))
-<<<<<<< Updated upstream
 #     score_matrix = np.zeros((n, n))
-=======
->>>>>>> Stashed changes
 #     keys = data.keys()
 #     pairs = []
 #     for i in range(n):
 #         for j in range(i+1, n):
 #             result = coint(data[keys[i]], data[keys[j]])
-<<<<<<< Updated upstream
 #             score_matrix[i,j] = result[0]
 #             pvalue_matrix[i, j] = result[1]
 #             if result[1] < 0.05:
 #                 pairs.append((keys[i], keys[j]))
 #     return score_matrix, pvalue_matrix, pairs #return p=lag
-=======
 #             pvalue_matrix[i, j] = result[1]
 #             if result[1] < 0.05:
 #                 pairs.append((keys[i], keys[j]))
 #     return pvalue_matrix, pairs #return p=lag, statistics
->>>>>>> Stashed changes
 #
 #
 # #TLS
@@ -88,12 +78,9 @@ class Strategy(bt.Strategy):
 # #set maxlag=0?
 # from statsmodels.tsa.stattools import adfuller
 # #eg spread = train.asset2 - model.params[0] * train.asset1
-<<<<<<< Updated upstream
 # adf = adfuller(spread, maxlag = 1) #eg spread = train.asset2 - model.params[0] * train.asset1
 #set maxlag=0?
-=======
 # adf = adfuller(spread, maxlag = 1)
->>>>>>> Stashed changes
 # #or adf = adfuller(spread, autolag='BIC')
 # print('ADF Statistic: ', adf[0])
 # print('p-value: ', adf[1])

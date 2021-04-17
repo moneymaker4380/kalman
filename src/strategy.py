@@ -28,14 +28,7 @@ class Strategy(bt.Strategy):
 
         return betas, n_lags, t_stat,
 
-    def init_kalman(self, name, error_df, n_lags):
-        lags = list(map(lambda x: error_df - error_df.shift(x), range(1,n_lags+1)))
-        obs = pd.concat([error_df.shift(1), error_df])
-        kf = KalmanFilter(n_dim_obs=1, n_dim_state=factors.shape[1],
-                          transition_matrices=np.eye(factors.shape[1]),
-                          observation_matrices=obs_matrix,
-                          em_vars='transition_covariance, observation_covariance,''initial_state_mean, initial_state_covariance')
-        pass
+
     
 ###cointegration
 from statsmodels.tsa.stattools import coint

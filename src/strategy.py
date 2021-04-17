@@ -34,16 +34,18 @@ class Strategy(bt.Strategy):
 from statsmodels.tsa.stattools import coint
 def find_cointegrated_pairs(data):
     n = data.shape[1]
+    score_matrix = np.zeros((n, n))
     pvalue_matrix = np.ones((n, n))
     keys = data.keys()
     pairs = []
     for i in range(n):
         for j in range(i+1, n):
             result = coint(data[keys[i]], data[keys[j]])
+            score_matrix[i,j] = result[0]
             pvalue_matrix[i, j] = result[1]
             if result[1] < 0.05:
                 pairs.append((keys[i], keys[j]))
-    return pvalue_matrix, pairs #return p=lag, statistics
+    return score_matrix, pvalue_matrix, pairs #return p=lag
 
 
 #TLS

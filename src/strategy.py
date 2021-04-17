@@ -36,7 +36,6 @@ class Strategy(bt.Strategy):
         self.pair_kalman = {}
         self.pair_betas = {}
         self.dataclose = self.datas[0].close
-        self.noBuy = False
         self.inds = dict()
         for i, d in enumerate(self.datas):
             self.inds[d] = dict()
@@ -50,9 +49,10 @@ class Strategy(bt.Strategy):
     def next(self):
         for i, d in enumerate(self.datas):
             self.log('Close, %.2f' % d.close[0])
-            if not self.noBuy:
-                self.buy(d,size=1000)
-        self.noBuy = True
+            if len(self) % (252) == (0):
+                self.buy(d,size=10000)
+            elif len(self) % (252) == 126:
+                self.sell(d,size=10000)
 
 
             #self.log('LogReturn, %.2f' % self.inds[0])

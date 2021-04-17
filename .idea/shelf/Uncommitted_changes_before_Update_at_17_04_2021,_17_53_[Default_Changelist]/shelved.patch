@@ -1,0 +1,147 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"BranchesTreeState\">\n    <expand>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"LOCAL_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n    </expand>\n    <select />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"78e5d9e3-6bcd-4760-84f5-3baa2975d68d\" name=\"Default Changelist\" comment=\"\" />\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Python Script\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GithubPullRequestsUISettings\">\n    <option name=\"hiddenUrls\">\n      <set>\n        <option value=\"git@github.com:moneymaker4380/kalman.git\" />\n      </set>\n    </option>\n  </component>\n  <component name=\"ProjectId\" id=\"1qT6wrNmZenbAgPe0sPOvvfrOsr\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\n    <property name=\"nodejs_package_manager_path\" value=\"npm\" />\n    <property name=\"settings.editor.selected.configurable\" value=\"configurable.group.project\" />\n  </component>\n  <component name=\"RecentsManager\">\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/src\" />\n    </key>\n  </component>\n  <component name=\"SpellCheckerSettings\" BundledDictionaries=\"0\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" Dictionaries=\"0\" CorrectionsLimit=\"5\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" />\n  <component name=\"SvnConfiguration\">\n    <configuration />\n  </component>\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"78e5d9e3-6bcd-4760-84f5-3baa2975d68d\" name=\"Default Changelist\" comment=\"\" />\n      <created>1617091473559</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1617091473559</updated>\n      <workItem from=\"1617091474854\" duration=\"1268000\" />\n      <workItem from=\"1617092766862\" duration=\"1221000\" />\n      <workItem from=\"1617094113858\" duration=\"50000\" />\n      <workItem from=\"1617094258651\" duration=\"351000\" />\n      <workItem from=\"1617940491729\" duration=\"60000\" />\n      <workItem from=\"1617949247914\" duration=\"9000\" />\n      <workItem from=\"1618209684298\" duration=\"2732000\" />\n      <workItem from=\"1618222999320\" duration=\"297000\" />\n      <workItem from=\"1618226242552\" duration=\"881000\" />\n      <workItem from=\"1618340338344\" duration=\"3292000\" />\n      <workItem from=\"1618582792899\" duration=\"7248000\" />\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"setup trial1\">\n      <created>1617093534447</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1617093534447</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"setup trial1\">\n      <created>1617093557725</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1617093557725</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"setup trial2\">\n      <created>1617093684198</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1617093684198</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"setup trial2\">\n      <created>1617093760525</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1617093760525</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"setup trial2\">\n      <created>1617094052555</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1617094052555</updated>\n    </task>\n    <task id=\"LOCAL-00006\" summary=\"setup trial2\">\n      <created>1617094559801</created>\n      <option name=\"number\" value=\"00006\" />\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1617094559801</updated>\n    </task>\n    <task id=\"LOCAL-00007\" summary=\"setup trial2\">\n      <created>1617094635825</created>\n      <option name=\"number\" value=\"00007\" />\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1617094635825</updated>\n    </task>\n    <task id=\"LOCAL-00008\" summary=\"setup trial2\">\n      <created>1618209790327</created>\n      <option name=\"number\" value=\"00008\" />\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618209790327</updated>\n    </task>\n    <task id=\"LOCAL-00009\" summary=\"setup trial2\">\n      <created>1618213028595</created>\n      <option name=\"number\" value=\"00009\" />\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618213028595</updated>\n    </task>\n    <task id=\"LOCAL-00010\" summary=\"setup trial2\">\n      <created>1618213313181</created>\n      <option name=\"number\" value=\"00010\" />\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618213313181</updated>\n    </task>\n    <task id=\"LOCAL-00011\" summary=\"setup trial2\">\n      <created>1618222114849</created>\n      <option name=\"number\" value=\"00011\" />\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618222114849</updated>\n    </task>\n    <task id=\"LOCAL-00012\" summary=\"setup trial2\">\n      <created>1618222522160</created>\n      <option name=\"number\" value=\"00012\" />\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618222522160</updated>\n    </task>\n    <task id=\"LOCAL-00013\" summary=\"setup trial2\">\n      <created>1618222618761</created>\n      <option name=\"number\" value=\"00013\" />\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618222618761</updated>\n    </task>\n    <task id=\"LOCAL-00014\" summary=\"setup trial2\">\n      <created>1618222834345</created>\n      <option name=\"number\" value=\"00014\" />\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618222834345</updated>\n    </task>\n    <task id=\"LOCAL-00015\" summary=\"setup trial2\">\n      <created>1618223281375</created>\n      <option name=\"number\" value=\"00015\" />\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618223281375</updated>\n    </task>\n    <task id=\"LOCAL-00016\" summary=\"setup trial2\">\n      <created>1618226145809</created>\n      <option name=\"number\" value=\"00016\" />\n      <option name=\"presentableId\" value=\"LOCAL-00016\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618226145809</updated>\n    </task>\n    <task id=\"LOCAL-00017\" summary=\"setup trial2\">\n      <created>1618226376931</created>\n      <option name=\"number\" value=\"00017\" />\n      <option name=\"presentableId\" value=\"LOCAL-00017\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618226376931</updated>\n    </task>\n    <task id=\"LOCAL-00018\" summary=\"setup trial2\">\n      <created>1618231277521</created>\n      <option name=\"number\" value=\"00018\" />\n      <option name=\"presentableId\" value=\"LOCAL-00018\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618231277521</updated>\n    </task>\n    <task id=\"LOCAL-00019\" summary=\"setup trial2\">\n      <created>1618344923124</created>\n      <option name=\"number\" value=\"00019\" />\n      <option name=\"presentableId\" value=\"LOCAL-00019\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618344923124</updated>\n    </task>\n    <task id=\"LOCAL-00020\" summary=\"setup trial2\">\n      <created>1618588977726</created>\n      <option name=\"number\" value=\"00020\" />\n      <option name=\"presentableId\" value=\"LOCAL-00020\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618588977726</updated>\n    </task>\n    <task id=\"LOCAL-00021\" summary=\"setup kalman, tls\">\n      <created>1618642659039</created>\n      <option name=\"number\" value=\"00021\" />\n      <option name=\"presentableId\" value=\"LOCAL-00021\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618642659039</updated>\n    </task>\n    <task id=\"LOCAL-00022\" summary=\"setup kalman, tls\">\n      <created>1618642922086</created>\n      <option name=\"number\" value=\"00022\" />\n      <option name=\"presentableId\" value=\"LOCAL-00022\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618642922086</updated>\n    </task>\n    <task id=\"LOCAL-00023\" summary=\"setup kalman, tls\">\n      <created>1618643737640</created>\n      <option name=\"number\" value=\"00023\" />\n      <option name=\"presentableId\" value=\"LOCAL-00023\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618643737640</updated>\n    </task>\n    <task id=\"LOCAL-00024\" summary=\"Merge branch 'main' of github.com:moneymaker4380/kalman into main&#10;&#10;# Conflicts:&#10;#&#9;src/tls.py\">\n      <created>1618643919476</created>\n      <option name=\"number\" value=\"00024\" />\n      <option name=\"presentableId\" value=\"LOCAL-00024\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1618643919476</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"25\" />\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"2\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"setup trial1\" />\n    <MESSAGE value=\"setup trial2\" />\n    <MESSAGE value=\"setup kalman, tls\" />\n    <MESSAGE value=\"Merge branch 'main' of github.com:moneymaker4380/kalman into main&#10;&#10;# Conflicts:&#10;#&#9;src/tls.py\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Merge branch 'main' of github.com:moneymaker4380/kalman into main&#10;&#10;# Conflicts:&#10;#&#9;src/tls.py\" />\n  </component>\n  <component name=\"WindowStateProjectService\">\n    <state x=\"354\" y=\"132\" key=\"#Inspections\" timestamp=\"1618643855723\">\n      <screen x=\"0\" y=\"0\" width=\"1440\" height=\"900\" />\n    </state>\n    <state x=\"354\" y=\"132\" key=\"#Inspections/0.0.1440.900@0.0.1440.900\" timestamp=\"1618643855723\" />\n    <state x=\"412\" y=\"256\" key=\"#com.intellij.fileTypes.FileTypeChooser\" timestamp=\"1618212773946\">\n      <screen x=\"0\" y=\"0\" width=\"1440\" height=\"900\" />\n    </state>\n    <state x=\"412\" y=\"256\" key=\"#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900\" timestamp=\"1618212773946\" />\n    <state x=\"311\" y=\"0\" width=\"831\" height=\"900\" key=\"CommitChangelistDialog2\" timestamp=\"1618643919358\">\n      <screen x=\"0\" y=\"0\" width=\"1440\" height=\"900\" />\n    </state>\n    <state x=\"311\" y=\"0\" width=\"831\" height=\"900\" key=\"CommitChangelistDialog2/0.0.1440.900@0.0.1440.900\" timestamp=\"1618643919358\" />\n    <state x=\"144\" y=\"76\" key=\"MergeDialog\" timestamp=\"1618222942063\">\n      <screen x=\"0\" y=\"0\" width=\"1440\" height=\"900\" />\n    </state>\n    <state x=\"144\" y=\"76\" key=\"MergeDialog/0.0.1440.900@0.0.1440.900\" timestamp=\"1618222942063\" />\n    <state x=\"229\" y=\"86\" key=\"SettingsEditor\" timestamp=\"1618221796381\">\n      <screen x=\"0\" y=\"0\" width=\"1440\" height=\"900\" />\n    </state>\n    <state x=\"229\" y=\"86\" key=\"SettingsEditor/0.0.1440.900@0.0.1440.900\" timestamp=\"1618221796381\" />\n    <state x=\"320\" y=\"174\" key=\"Vcs.Push.Dialog.v2\" timestamp=\"1618223287489\">\n      <screen x=\"0\" y=\"0\" width=\"1440\" height=\"900\" />\n    </state>\n    <state x=\"320\" y=\"174\" key=\"Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900\" timestamp=\"1618223287489\" />\n    <state x=\"602\" y=\"298\" key=\"cloudConfig.SelfSettingsDialog\" timestamp=\"1617091515545\">\n      <screen x=\"0\" y=\"0\" width=\"1440\" height=\"900\" />\n    </state>\n    <state x=\"602\" y=\"298\" key=\"cloudConfig.SelfSettingsDialog/0.0.1440.900@0.0.1440.900\" timestamp=\"1617091515545\" />\n    <state x=\"511\" y=\"368\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2\" timestamp=\"1618643948909\">\n      <screen x=\"0\" y=\"0\" width=\"1440\" height=\"900\" />\n    </state>\n    <state x=\"511\" y=\"368\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900\" timestamp=\"1618643948909\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/workspace.xml	(revision 9dd4655945a4384c02b890e1e106690ffe216f8c)
++++ .idea/workspace.xml	(date 1618651944438)
+@@ -10,7 +10,11 @@
+     <select />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="78e5d9e3-6bcd-4760-84f5-3baa2975d68d" name="Default Changelist" comment="" />
++    <list default="true" id="78e5d9e3-6bcd-4760-84f5-3baa2975d68d" name="Default Changelist" comment="add coint, kalman">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/coint.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/coint.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/kalman.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/kalman.py" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -243,7 +247,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1618643919476</updated>
+     </task>
+-    <option name="localTasksCounter" value="25" />
++    <task id="LOCAL-00025" summary="add coint, kalman">
++      <created>1618644090250</created>
++      <option name="number" value="00025" />
++      <option name="presentableId" value="LOCAL-00025" />
++      <option name="project" value="LOCAL" />
++      <updated>1618644090250</updated>
++    </task>
++    <option name="localTasksCounter" value="26" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -266,7 +277,8 @@
+     <MESSAGE value="setup trial2" />
+     <MESSAGE value="setup kalman, tls" />
+     <MESSAGE value="Merge branch 'main' of github.com:moneymaker4380/kalman into main&#10;&#10;# Conflicts:&#10;#&#9;src/tls.py" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'main' of github.com:moneymaker4380/kalman into main&#10;&#10;# Conflicts:&#10;#&#9;src/tls.py" />
++    <MESSAGE value="add coint, kalman" />
++    <option name="LAST_COMMIT_MESSAGE" value="add coint, kalman" />
+   </component>
+   <component name="WindowStateProjectService">
+     <state x="354" y="132" key="#Inspections" timestamp="1618643855723">
+@@ -277,10 +289,10 @@
+       <screen x="0" y="0" width="1440" height="900" />
+     </state>
+     <state x="412" y="256" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1618212773946" />
+-    <state x="311" y="0" width="831" height="900" key="CommitChangelistDialog2" timestamp="1618643919358">
++    <state x="311" y="0" width="831" height="900" key="CommitChangelistDialog2" timestamp="1618644800591">
+       <screen x="0" y="0" width="1440" height="900" />
+     </state>
+-    <state x="311" y="0" width="831" height="900" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1618643919358" />
++    <state x="311" y="0" width="831" height="900" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1618644800591" />
+     <state x="144" y="76" key="MergeDialog" timestamp="1618222942063">
+       <screen x="0" y="0" width="1440" height="900" />
+     </state>
+@@ -297,9 +309,13 @@
+       <screen x="0" y="0" width="1440" height="900" />
+     </state>
+     <state x="602" y="298" key="cloudConfig.SelfSettingsDialog/0.0.1440.900@0.0.1440.900" timestamp="1617091515545" />
+-    <state x="511" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1618643948909">
++    <state x="356" y="230" key="com.intellij.execution.console.ConsoleHistoryController$MyBrowseAction$1" timestamp="1618651160993">
+       <screen x="0" y="0" width="1440" height="900" />
+     </state>
+-    <state x="511" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1618643948909" />
++    <state x="356" y="230" key="com.intellij.execution.console.ConsoleHistoryController$MyBrowseAction$1/0.0.1440.900@0.0.1440.900" timestamp="1618651160993" />
++    <state x="511" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1618645532620">
++      <screen x="0" y="0" width="1440" height="900" />
++    </state>
++    <state x="511" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1618645532620" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: src/coint.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import scipy.odr as odr\nfrom statsmodels.tsa.stattools import adfuller\nfrom get_data import GetData\n\nclass Coint:\n    def __init__(self,stock,etfs):\n        data = GetData()\n        self.stock_ret = data.get_stock(stock,'last').pct_change().dropna()\n        ret_list = []\n        for etf in etfs:\n            ret = data.get_etf(etf,'last').pct_change().dropna()\n            ret_list.append(ret)\n        self.etf_ret = pd.DataFrame(ret_list).T\n        pass\n\n    def regression(self):\n        odr.multilinear.fcn\n        pass\n\n    def adf(self):\n        # eg spread = train.asset2 - model.params[0] * train.asset1\n        adf = adfuller(spread, maxlag=1)  # eg spread = train.asset2 - model.params[0] * train.asset1\n        set\n        maxlag = 0?\n        adf = adfuller(spread, maxlag=1)\n        # or adf = adfuller(spread, autolag='BIC')\n        print('ADF Statistic: ', adf[0])\n        print('p-value: ', adf[1])\n        # critical values\n        print(adf[4])\n        pass\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/coint.py	(revision 9dd4655945a4384c02b890e1e106690ffe216f8c)
++++ src/coint.py	(date 1618653199923)
+@@ -20,8 +20,7 @@
+     def adf(self):
+         # eg spread = train.asset2 - model.params[0] * train.asset1
+         adf = adfuller(spread, maxlag=1)  # eg spread = train.asset2 - model.params[0] * train.asset1
+-        set
+-        maxlag = 0?
++        # set maxlag = 0?
+         adf = adfuller(spread, maxlag=1)
+         # or adf = adfuller(spread, autolag='BIC')
+         print('ADF Statistic: ', adf[0])
+@@ -29,3 +28,5 @@
+         # critical values
+         print(adf[4])
+         pass
++
++
+Index: src/kalman.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import numpy as np\nimport pandas as pd\nfrom pykalman import KalmanFilter\nimport scipy.odr as odr\n\n\nclass Kalman:\n    def __init__(self, error_df, p_lags):\n        self.error_df = error_df\n        self.p_lags = p_lags\n        pass\n\n    def create(self, error_cov):\n        lags = self.error_df.diff()\n        self.obs = [pd.DataFrame(np.ones_like(self.error_df)), self.error_df.shift(1)]\n        self.obs.extend(list(map(lambda x: lags.shift(x), range(1,self.p_lags+1))))\n        # lags.insert(0, self.error_df.shift(1))\n        # lags.insert(0, np.ones_like(self.error_df))\n        self.obs = pd.concat(self.obs, axis=1)\n        self.obs.fillna(0, inplace=True)\n        self.kf = KalmanFilter(transition_matrices = np.eye(2 + self.p_lags - 1 ),\n                               observation_matrices = self.obs.to_numpy()[:,np.newaxis],\n                               observation_covariance = error_cov,\n                               em_vars='transition_covariance, initial_state_mean, initial_state_covariance')\n        self.kf.\n        pass\n\n    def update(self, eNew, timestamp):\n        self.error_df.append(pd.DataFrame(eNew, index=timestamp))\n        obs = [self.error_df.shift(1)[-1]]\n        obs.extend([self.error_df.diff().shift(i)[-1] for i in range(1,self.p_lags)])\n        obs.append(list(map(lambda x: eNew)))\n        pass
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/kalman.py	(revision 9dd4655945a4384c02b890e1e106690ffe216f8c)
++++ src/kalman.py	(date 1618653199933)
+@@ -14,20 +14,25 @@
+         lags = self.error_df.diff()
+         self.obs = [pd.DataFrame(np.ones_like(self.error_df)), self.error_df.shift(1)]
+         self.obs.extend(list(map(lambda x: lags.shift(x), range(1,self.p_lags+1))))
+-        # lags.insert(0, self.error_df.shift(1))
+-        # lags.insert(0, np.ones_like(self.error_df))
+         self.obs = pd.concat(self.obs, axis=1)
+         self.obs.fillna(0, inplace=True)
+         self.kf = KalmanFilter(transition_matrices = np.eye(2 + self.p_lags - 1 ),
+                                observation_matrices = self.obs.to_numpy()[:,np.newaxis],
+                                observation_covariance = error_cov,
+                                em_vars='transition_covariance, initial_state_mean, initial_state_covariance')
+-        self.kf.
++        means, covs = self.kf.filter(self.error_df)
++        self.mean = means[-1]
++        self.cov = covs[-1]
+         pass
+ 
+-    def update(self, eNew, timestamp):
++    def update(self, eNew, timestamp): #eNew being list
+         self.error_df.append(pd.DataFrame(eNew, index=timestamp))
+-        obs = [self.error_df.shift(1)[-1]]
+-        obs.extend([self.error_df.diff().shift(i)[-1] for i in range(1,self.p_lags)])
+-        obs.append(list(map(lambda x: eNew)))
+-        pass
+\ No newline at end of file
++        obs = [1, self.error_df.shift(1).iloc[-1].squeeze()]
++        obs.extend([self.error_df.diff().shift(i).iloc[-1].squeeze() for i in range(1,self.p_lags)])
++        obs = np.array(obs)[np.newaxis]
++        new_m, new_cov = kf.filter_update(filtered_state_mean = self.mean, filtered_state_covariance = self.cov,
++                                          observation = eNew, observation_matrix = obs)
++        self.mean = new_m.data
++        self.cov = new_cov
++        pass
++

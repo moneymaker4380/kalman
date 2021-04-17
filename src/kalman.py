@@ -32,5 +32,7 @@ class Kalman:
         obs = [1,self.error_df.shift(1).iloc[-1].squeeze()]
         obs.extend([self.error_df.diff().shift(i).iloc[-1].squeeze() for i in range(1,self.p_lags+1)])
         obs = np.array(obs)[np.newaxis]
-        new_m, new_cov = self.kf.filter_update()
+        new_m, new_cov = self.kf.filter_update(filtered_state_mean = self.mean, filtered_state_covariance = self.cov, observation = eNew, observation_matrix = obs)
+        self.mean = new_m.data
+        self.cov = new_cov
         pass

@@ -1,20 +1,25 @@
 import scipy.odr as odr
+import pandas as pd
 from statsmodels.tsa.stattools import adfuller
 from get_data import GetData
 
 class Coint:
-    def __init__(self,stock,etfs):
+    def __init__(self,feed,stock,etfs):
         data = GetData()
-        self.stock_ret = data.get_stock(stock,'last').pct_change().dropna()
+        #should be called in sth like next() in strat
+        feed_dict = dict()
+        for i,d in enumerate(feed.datas):
+            feed_dict[d._name] = i
+        self.stock_ret = pd.Series(feed.datas[feed_dict[stock]].close).pct_change().dropna()
         ret_list = []
         for etf in etfs:
-            ret = data.get_etf(etf,'last').pct_change().dropna()
+            ret = pd.Series(feed.datas[feed_dict[etf]].close).pct_change().dropna()
             ret_list.append(ret)
         self.etf_ret = pd.DataFrame(ret_list).T
         pass
 
     def regression(self):
-        y = self.stock_ret.to_numpy()
+        x = self.stock_ret.to_numpy()
         y = self.etf_ret.T.to_numpy()
         linmod = odr.Model(linfit)
         data = odr.Data(x, y)

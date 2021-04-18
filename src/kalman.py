@@ -8,7 +8,7 @@ class Kalman:
     def __init__(self, error_df, p_lags, adf_threshold):
         self.error_df = error_df
         self.p_lags = p_lags
-        self.error_sd = np.sqrt(self.error_df.cov().squeeze())
+        self.error_sd = self.error_df.std().squeeze()
         self.adf_threshold = adf_threshold
         pass
 
@@ -41,6 +41,9 @@ class Kalman:
 
     def tStat(self):
         return self.state_mean[1] / np.sqrt(self.state_cov[1, 1])
+
+    def sr(self):
+        return self.error_df.iloc[-1].squeeze()/self.error_sd
 
     def asr(self):
         return abs(self.error_df.iloc[-1].squeeze()/self.error_sd)

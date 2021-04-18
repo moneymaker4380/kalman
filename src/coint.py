@@ -15,8 +15,7 @@ class Coint:
             ret_list.append(ret)
         self.etf_ret = pd.DataFrame(ret_list).T
         self.regression()
-        self.residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy)
-        self.adf(self.residuals)
+        self.adf(pd.DataFrame(self.residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy), index=self.stock_ret.index))
         pass
 
     def log_ret(self,tick,feed,period):
@@ -47,6 +46,6 @@ class Coint:
     def residual(self, x, y): #x horizontal is one observation, etf logR but not yet added 1
         x = np.insert(x,0,1,axis=1)
         residuals = (y-x.dot(self.beta))/np.sqrt(self.beta.dot(self.beta))
-        self.residuals = pd.DataFrame(residuals, index=self.stock_ret.index)
+        return residuals
 
 

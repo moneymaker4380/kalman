@@ -2,10 +2,10 @@ from scipy.stats import norm
 
 class EvalMetrics:
     def __init__(self,rfrate,simplereturn,ar,day):
-        self.rfrate = 0.017
+        self.rfrate = 0.016
         self.logreturn = log_return
-        self.ar
-        self.nav
+        self.ar = (log_return ** (365/self.day)) -1
+        self.nav 
         self.day = 260
 
     def sharpe(self):

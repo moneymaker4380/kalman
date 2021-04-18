@@ -16,7 +16,7 @@ class Coint:
             ret_list.append(ret)
         self.etf_ret = pd.DataFrame(ret_list).T
         self.regression()
-        self.residuals = pd.DataFrame(self.residual(x=self.etf_ret.iloc[:-5].to_numpy(), y=self.stock_ret.iloc[:-5].to_numpy()), index=self.stock_ret.index[:-5])
+        self.residuals = pd.DataFrame(self.residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy()), index=self.stock_ret.index)
         self.adf(self.residuals)
         pass
 
@@ -27,8 +27,8 @@ class Coint:
         return ret
 
     def regression(self):
-        y = self.stock_ret.iloc[:-5].to_numpy()
-        x = self.etf_ret.iloc[:-5].T.to_numpy()
+        y = self.stock_ret.to_numpy()
+        x = self.etf_ret.T.to_numpy()
         data = odr.Data(x=x, y=y) #x vertical is one observation
         odrfit = odr.ODR(data,odr.models.multilinear)
         odroutput = odrfit.run()

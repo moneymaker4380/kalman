@@ -13,7 +13,7 @@ class Kalman:
 
     def create(self,prior_state_mean,prior_state_cov,obs_cov):
         # lags = self.error_df.diff()
-        self.obs = [pd.DataFrame(np.ones_like(self.error_df.iloc[-5:]), index=self.error_df.index[-5:]), self.error_df.shift(1).iloc[-5:]]
+        self.obs = [pd.DataFrame(np.ones_like(self.error_df), index=self.error_df.index), self.error_df.shift(1).iloc]
         # self.obs.extend(list(map(lambda x: lags.shift(x), range(1,self.p_lags))))
         # lags.insert(0, self.error_df.shift(1))
         # lags.insert(0, np.ones_like(self.error_df))
@@ -23,13 +23,13 @@ class Kalman:
         # transit_mx[[0,1],[0,1]] = 1
         # transit_off = np.ones(2)
         # transit_off[[0,1]] = 0
-        self.kf = KalmanFilter(transition_matrices = np.eye((2,2)),
+        self.kf = KalmanFilter(transition_matrices = np.eye(2),
                                observation_matrices = self.obs.to_numpy()[:,np.newaxis],
                                observation_covariance = np.array([[obs_cov]]),
                                initial_state_mean = prior_state_mean,
                                initial_state_covariance = prior_state_cov,
                                em_vars='transition_covariance')
-        means, covs = self.kf.filter(self.error_df.iloc[-5:])
+        means, covs = self.kf.filter(self.error_df)
         self.state_mean = means[-1]
         self.state_cov = covs[-1]
         pass

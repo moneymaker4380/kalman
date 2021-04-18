@@ -32,7 +32,7 @@ if __name__ == "__main__":
         cerebro1.adddata(etf,name=ticker)
 
     # ['PEP', 'KO', 'MCD']
-    for ticker in ['AAPL']:
+    for ticker in ['MSFT']:
         stock = data.cerebro_stock(ticker)
         print(ticker)
         cerebro1.adddata(stock, name=ticker)

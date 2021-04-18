@@ -56,10 +56,12 @@ class Strategy(bt.Strategy):
         if ((not self.initBool) and (len(self) == 2820)):
             for i, d in enumerate(self.datas):
                 self.feed_dict[d._name] = i
-            coint = Coint(self,self.feed_dict,'AAPL',['VTV','VUG'],300)
+            coint = Coint(self,self.feed_dict,'MSFT',['VTV','VUG'],300)
             print(coint.beta)
             print(coint.t_stat, coint.p_lags)
-            kf = Kalman(coint.residuals,coint.p_lags,-2.0)
+            kf = Kalman(coint.residuals,-2.0,coint.adf_betas,coint.adf_betas_cov,coint.adf_res_var)
+            print(kf.state_mean)
+            print(np.diag(kf.state_cov))
             print(kf.tStat())
             self.initBool = True
         else:

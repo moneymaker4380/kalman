@@ -13,7 +13,7 @@ class Kalman:
 
     def create(self,prior_state_mean,prior_state_cov,obs_cov):
         # lags = self.error_df.diff()
-        self.obs = [pd.DataFrame(np.ones_like(self.error_df), index=self.error_df.index), self.error_df.shift(1).iloc]
+        self.obs = [pd.DataFrame(np.ones_like(self.error_df), index=self.error_df.index), self.error_df.shift(1)]
         # self.obs.extend(list(map(lambda x: lags.shift(x), range(1,self.p_lags))))
         # lags.insert(0, self.error_df.shift(1))
         # lags.insert(0, np.ones_like(self.error_df))

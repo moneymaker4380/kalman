@@ -5,9 +5,10 @@ from statsmodels.tsa.stattools import adfuller
 from get_data import GetData
 
 class Coint:
-    def __init__(self,feed,feed_dict,stock,etfs,period):
+    def __init__(self,feed,feed_dict,stock,etfs,period,adr_threshold):
         #should be called in sth like next() in strat
         #period in trading days
+        self.adr_threshold = self.adr_threshold
         self.feed_dict = feed_dict
         self.stock_ret = self.log_ret(stock,feed,period).ffill()
         ret_list = []
@@ -15,8 +16,10 @@ class Coint:
             ret = self.log_ret(etf,feed,period).ffill()
             ret_list.append(ret)
         self.etf_ret = pd.DataFrame(ret_list).T
+        self.residuals = np.array([])
         self.regression()
-        self.residuals = pd.DataFrame(self.residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy()), index=self.stock_ret.index)
+        self.update_residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy())
+        # self.residuals = pd.DataFrame(self.residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy()), index=self.stock_ret.index)
         self.adf(self.residuals)
         pass
 
@@ -37,22 +40,26 @@ class Coint:
         return
 
     def adf(self, errors):
-        # set maxlag = 0?
-        adf = adfuller(errors, autolag='BIC', maxlag=0, regresults=True)
+        adf = adfuller(errors, autolag='BIC')
         self.t_stat = adf[0]
-        self.p_lags = adf[3].usedlag
-        adf_result = adf[3].resols
-        self.adf_betas = adf_result.params[::-1]
-        self.adf_betas_cov = np.flip(adf_result.cov_params())
-        self.adf_res_var = adf_result.resid.var(ddof=1)
+        self.p_lags = adf[2]
         # print('p-value: ', adf[1])
         #critical values
-        # print(self.adf)
+        # print(adf[4])
         pass
 
-    def residual(self, x, y): #x horizontal is one observation, etf logR but not yet added 1
+    def update_residual(self, x, y): #x horizontal is one observation
         x = np.insert(x,0,1,axis=1)
-        residuals = (y-x.dot(self.beta))/np.sqrt(self.beta.dot(self.beta)+1)
-        return residuals
+        self.residuals = self.residuals.append(self.residuals, (y-x.dot(self.beta))/np.sqrt(self.beta.dot(self.beta)+1))
+        pass
+
+    def sr(self):
+        return self.residuals[-1]/np.std(self.residuals,ddof=1)
+
+    def asr(self):
+        return abs(self.residuals[-1]/np.std(self.residuals,ddof=1))
+
+    def powerStat(self):
+        return self.asr()**(self.adf_threshold - self.tStat())
 
 

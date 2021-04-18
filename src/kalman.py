@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from pykalman import KalmanFilter
 import scipy.odr as odr
+import matplotlib.pyplot as plt
 
 class Kalman:
     def __init__(self, error_df, adf_threshold, prior_state_mean, prior_state_cov, obs_cov):
@@ -13,7 +14,7 @@ class Kalman:
 
     def create(self,prior_state_mean,prior_state_cov,obs_cov):
         # lags = self.error_df.diff()
-        self.obs = [pd.DataFrame(np.ones_like(self.error_df), index=self.error_df.index), self.error_df.shift(1)]
+        self.obs = [pd.DataFrame(np.ones_like(self.error_df.iloc[1:]), index=self.error_df.index[1:]), self.error_df.shift(1).iloc[1:]]
         # self.obs.extend(list(map(lambda x: lags.shift(x), range(1,self.p_lags))))
         # lags.insert(0, self.error_df.shift(1))
         # lags.insert(0, np.ones_like(self.error_df))
@@ -28,8 +29,11 @@ class Kalman:
                                observation_covariance = np.array([[obs_cov]]),
                                initial_state_mean = prior_state_mean,
                                initial_state_covariance = prior_state_cov,
-                               em_vars='transition_covariance')
-        means, covs = self.kf.filter(self.error_df)
+                               em_vars = "transition_covariance")
+        means, covs = self.kf.filter(self.error_df.iloc[1:])
+        plt.figure()
+        plt.plot(means[:,1])
+        plt.show()
         self.state_mean = means[-1]
         self.state_cov = covs[-1]
         pass

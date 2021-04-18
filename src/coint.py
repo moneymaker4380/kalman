@@ -1,6 +1,6 @@
 import scipy.odr as odr
-import pandas as pd
 import numpy as np
+import pandas as pd
 from statsmodels.tsa.stattools import adfuller
 
 class Coint:
@@ -17,25 +17,24 @@ class Coint:
             ret_list.append(ret)
         self.etf_ret = pd.DataFrame(ret_list).T
         pass
-    
+
     def log_ret(self,tick,feed,period):
         data = pd.Series(feed.datas[self.feed_dict[tick]].close)[-period:]
         ret = np.log(data/data[0])
         return pd.Series(ret,index=data.index,name=tick)
-    
+
     def regression(self):
-        x = self.stock_ret.to_numpy()
-        y = self.etf_ret.T.to_numpy()
-        linmod = odr.Model(odr.multilinear.fcn)
-        data = odr.Data(x, y)
-        odrfit = odr.ODR(data, linmod, beta0=[1., 1., 1.])
-        odrres = odrfit.run()
-        self.betas = odrres.beta
+        y = self.stock_ret.to_numpy()
+        x = self.etf_ret.T.to_numpy()
+        data = odr.Data(x, y) #x vertical is one observation
+        odrfit = odr.ODR(data,odr.models.multilinear)
+        odroutput = odrfit.run()
+        self.beta = odroutput.beta
         pass
 
     def adf(self):
         # eg spread = train.asset2 - model.params[0] * train.asset1
-        adf = adfuller(spread, maxlag=1)
+        adf = adfuller(self.errorDF, autolag='BIC')
         #set maxlag = 0?
         #or adf = adfuller(spread, autolag='BIC')
         print('ADF Statistic: ', adf[0])
@@ -43,3 +42,8 @@ class Coint:
         #critical values
         print(adf[4])
         pass
+
+    def residual(self):
+
+        pass
+

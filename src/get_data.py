@@ -14,7 +14,8 @@ import backtrader as bt
 class GetData:
     def __init__(self):
         for file in os.listdir('./data'):
-            exec(f'self.{file.split(".")[0]} = pd.read_pickle("./data/{file}","gzip")')
+            if 'STOCK' in file or 'ETF' in file:
+                exec(f'self.{file.split(".")[0]} = pd.read_pickle("./data/{file}","gzip")')
         self.stock_dict = {'last':self.STOCK_PX_LAST,'volume':self.STOCK_PX_VOLUME,
                            'equity_weighted_average_price':self.STOCK_EQY_WEIGHTED_AVG_PX}
         self.etf_dict = {'last':self.ETF_PX_LAST,'volume':self.ETF_PX_VOLUME,

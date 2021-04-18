@@ -3,6 +3,7 @@ import pandas as pd
 import backtrader as bt
 import scipy.odr as odr
 from datetime import datetime
+import csv
 from log_return import LogReturn
 
 
@@ -36,6 +37,9 @@ class Strategy(bt.Strategy):
         self.pair_kalman = {}
         self.pair_betas = {}
         self.dataclose = self.datas[0].close
+        self.stat = open('position.csv', mode='w')
+        self.stat.write(','.join(['']+[d._name for d in self.datas]+['\n']))
+
         self.inds = dict()
         for i, d in enumerate(self.datas):
             self.inds[d] = dict()
@@ -48,14 +52,24 @@ class Strategy(bt.Strategy):
 
     def next(self):
         feed_dict = dict()
-        for i, d in enumerate(feed.datas):
+        self.stat.write(str(self.datetime.datetime(ago=0)) + ',')
+
+        for i, d in enumerate(self.datas):
             feed_dict[d._name] = i
-        for i, d in enumerate(self.datas[:-1]):
-            self.log('Close, %.2f' % d.close[0])
+        for i, d in enumerate(self.datas):
+            self.log(f'{d._name} Close, {d.close[0]}')
+            #self.log(f'{d._name} Position: {self.broker.getposition(d)}')
+            self.stat.write(str(self.broker.getposition(d).size)+',')
             if len(self) % (252) == (0):
                 self.buy(d,size=10000)
             elif len(self) % (252) == 126:
                 self.sell(d,size=10000)
+        self.stat.write('\n')
+
+
+    def stop(self):
+
+
 
 
 

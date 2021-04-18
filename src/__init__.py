@@ -62,9 +62,9 @@ if __name__ == "__main__":
     print('Calmar Ratio:', run.analyzers.Calmar.calmar)
     print('Annualized Volatility:', run.analyzers.Stats.get_analysis()['stddev'])
 
-    # cerebro1.addanalyzer(bt.analyzers.PyFolio, _name='pyfolio')
-    # pyfoliozer = run.analyzers.getbyname('pyfolio')
-    # returns, positions, transactions, gross_lev = pyfoliozer.get_pf_items()
+    #cerebro1.addanalyzer(bt.analyzers.PyFolio, _name='pyfolio')
+    #pyfoliozer = run.analyzers.getbyname('pyfolio')
+    #returns, positions, transactions, gross_lev = pyfoliozer.get_pf_items()
     # import pyfolio as pf
     # pf.create_full_tear_sheet(
     #     returns,

@@ -5,9 +5,11 @@ import scipy.odr as odr
 
 
 class Kalman:
-    def __init__(self, error_df, p_lags):
+    def __init__(self, error_df, p_lags, adf_threshold):
         self.error_df = error_df
         self.p_lags = p_lags
+        self.error_sd = np.sqrt(self.error_df.cov().squeeze())
+        self.adf_threshold = adf_threshold
         pass
 
     def create(self, error_cov):
@@ -23,8 +25,8 @@ class Kalman:
                                observation_covariance = error_cov,
                                em_vars='transition_covariance, initial_state_mean, initial_state_covariance')
         means, covs = self.kf.filter(self.error_df)
-        self.mean = means[-1]
-        self.cov = covs[-1]
+        self.state_mean = means[-1]
+        self.state_cov = covs[-1]
         pass
 
     def update(self, eNew, timestamp):
@@ -32,10 +34,17 @@ class Kalman:
         obs = [1,self.error_df.shift(1).iloc[-1].squeeze()]
         obs.extend([self.error_df.diff().shift(i).iloc[-1].squeeze() for i in range(1,self.p_lags+1)])
         obs = np.array(obs)[np.newaxis]
-        new_m, new_cov = self.kf.filter_update(filtered_state_mean = self.mean, filtered_state_covariance = self.cov, observation = eNew, observation_matrix = obs)
-        self.mean = new_m.data
-        self.cov = new_cov
+        new_m, new_cov = self.kf.filter_update(filtered_state_mean = self.state_mean, filtered_state_covariance = self.state_cov, observation = eNew, observation_matrix = obs)
+        self.state_mean = new_m.data
+        self.state_cov = new_cov
         pass
 
-    def tstat(self):
-        return self.mean[1]/np.sqrt(self.cov[1,1])
+    def tStat(self):
+        return self.state_mean[1] / np.sqrt(self.state_cov[1, 1])
+
+    def asr(self):
+        return abs(self.error_df.iloc[-1].squeeze()/self.error_sd)
+
+    def powerStat(self):
+        return self.asr()**(self.adf_threshold - self.tStat())
+

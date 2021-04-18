@@ -1,0 +1,18 @@
+Index: src/eval_metrics.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from scipy.stats import norm\n\nclass EvalMetrics:\n    def __init__(self,rfrate,simplereturn,ar,day):\n        self.rfrate = 0.016\n        self.logreturn = log_return\n        self.ar = (log_return ** (365/self.day)) -1\n        self.nav \n        self.day = 260\n\n    def sharpe(self):\n        Sharpe = ((self.logreturn.mean() - self.rfrate) / logreturn.std())\n        return Sharpe\n\n    def sortino(self):\n        downsidereturn = df0.loc[df0['returns'] < 0.0]\n        Sortino = ((self.logreturn.mean() - self.rfrate) / downsidereturn.std())\n        return Sortino\n\n    def calmar(self):\n        Calmar = self.ar/self.md()\n        return Calmar\n\n    def cvar(self):\n        alpha = 0.01\n        CVaR = alpha**(-1) * norm.pdf(norm.ppf(alpha))*self.logreturn.std() - self.logreturn.mean()\n        return CVaR\n\n    def md(self):\n        RollMax = self.logreturn.cummax()\n        DailyDrawdown = self.logreturn/RollMax - 1.0\n        MD = DailyDrawdown.cummin()\n        return MD\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/eval_metrics.py	(revision 1a747c6c9a9e2f482c4c5fa0ab9d758ab181cc78)
++++ src/eval_metrics.py	(date 1618727728207)
+@@ -1,7 +1,7 @@
+ from scipy.stats import norm
+ 
+ class EvalMetrics:
+-    def __init__(self,rfrate,simplereturn,ar,day):
++    def __init__(self,rfrate,logreturn,ar,day):
+         self.rfrate = 0.016
+         self.logreturn = log_return
+         self.ar = (log_return ** (365/self.day)) -1

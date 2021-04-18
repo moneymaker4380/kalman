@@ -21,10 +21,14 @@ if __name__ == "__main__":
 
 
     data = GetData()
-    # for ticker in data.etf_list():
+    # for ticker in data.stock_list():
     #     stock = data.cerebro_stock(ticker)
     #     print(ticker)
-    #     cerebro1.adddata(stock)
+    #     cerebro1.adddata(stock,name=ticker)
+    # for ticker in data.etf_list():
+    #     etf = data.cerebro_etf(ticker)
+    #     print(ticker)
+    #     cerebro1.adddata(etf,name=ticker)
 
     pep = data.cerebro_stock('PEP')
     pep.plotinfo.plot = False

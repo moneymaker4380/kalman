@@ -27,9 +27,11 @@ if __name__ == "__main__":
     #     cerebro1.adddata(stock)
 
     pep = data.cerebro_stock('PEP')
+    pep.plotinfo.plot = False
     cerebro1.adddata(pep, name='PEP')
 
     ko = data.cerebro_stock('KO')
+    ko.plotinfo.plot = False
     cerebro1.adddata(ko, name='KO')
 
     # data0 = bt.feeds.YahooFinanceData(dataname='SPY', fromdate=datetime(2006, 1, 1), todate=datetime(2020, 12, 31))
@@ -46,7 +48,7 @@ if __name__ == "__main__":
     cerebro1.addanalyzer(bt.analyzers.TimeReturn, _name='CumulativeReturn')
     cerebro1.addanalyzer(bt.analyzers.PeriodStats, _name='Stats')
 
-    cerebro1.addobserver(bt.observers.TimeReturn)
+    cerebro1.addobserver(bt.observers.Trades)
     cerebro1.addobserver(bt.observers.DrawDown)
 
     print('Starting Portfolio Value: %.2f' % cerebro1.broker.getvalue())
@@ -60,7 +62,17 @@ if __name__ == "__main__":
     print('Calmar Ratio:', run.analyzers.Calmar.calmar)
     print('Annualized Volatility:', run.analyzers.Stats.get_analysis()['stddev'])
 
-
+    # cerebro1.addanalyzer(bt.analyzers.PyFolio, _name='pyfolio')
+    # pyfoliozer = run.analyzers.getbyname('pyfolio')
+    # returns, positions, transactions, gross_lev = pyfoliozer.get_pf_items()
+    # import pyfolio as pf
+    # pf.create_full_tear_sheet(
+    #     returns,
+    #     positions=positions,
+    #     transactions=transactions,
+    #     gross_lev=gross_lev,
+    #     live_start_date='2006-01-01',  # This date is sample specific
+    #     round_trips=True)
 
     print('Final Portfolio Value: %.2f' % cerebro1.broker.getvalue())
 # factors = ols.add_constant(factors)

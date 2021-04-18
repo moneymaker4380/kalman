@@ -18,7 +18,7 @@ class GetData:
         self.stock_dict = {'last':self.STOCK_PX_LAST,'volume':self.STOCK_PX_VOLUME,
                            'equity_weighted_average_price':self.STOCK_EQY_WEIGHTED_AVG_PX}
         self.etf_dict = {'last':self.ETF_PX_LAST,'volume':self.ETF_PX_VOLUME,
-                         'high':self.ETF_PX_HIGH,'open':self.ETF_PX_VOLUME,
+                         'high':self.ETF_PX_HIGH,'open':self.ETF_PX_OPEN,
                          'low':self.ETF_PX_LOW,'vwap_volume':self.ETF_VWAP_VOLUME,
                          'fund_net_asset_value':self.ETF_FUND_NET_ASSET_VAL,
                          'equity_weighted_average_price':self.ETF_EQY_WEIGHTED_AVG_PX}
@@ -60,7 +60,7 @@ class GetData:
     
     def cerebro_etf(self,ticker):
         df = self.get_etf_all(ticker).iloc[:,:6]
-        return EtfFeed(df)
+        return EtfFeed(dataname=df)
         
   
 class StockFeed(bt.feeds.PandasData):
@@ -76,12 +76,14 @@ class StockFeed(bt.feeds.PandasData):
         ('timeframe', bt.TimeFrame.Days),
     )  
 
-class EtfFeed(bt.feeds.DataBase):
+class EtfFeed(bt.feeds.PandasData):
+    lines = ('open','high','low','close','volume')
     params = (
         ('open', 3),
         ('high', 2),
         ('low', 4),
         ('close', 0),
         ('volume', 1),
-        ('openinterest', None)
+        ('openinterest', -1),
+        ('timeframe', bt.TimeFrame.Days),
     ) 

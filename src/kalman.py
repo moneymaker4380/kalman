@@ -29,12 +29,12 @@ class Kalman:
         self.state_cov = covs[-1]
         pass
 
-    def update(self, eNew, timestamp):
-        self.error_df.append(pd.DataFrame(eNew, index=timestamp))
+    def update(self, error_new, timestamp):
+        self.error_df.append(pd.DataFrame(error_new, index=timestamp))
         obs = [1,self.error_df.shift(1).iloc[-1].squeeze()]
         obs.extend([self.error_df.diff().shift(i).iloc[-1].squeeze() for i in range(1,self.p_lags+1)])
         obs = np.array(obs)[np.newaxis]
-        new_m, new_cov = self.kf.filter_update(filtered_state_mean = self.state_mean, filtered_state_covariance = self.state_cov, observation = eNew, observation_matrix = obs)
+        new_m, new_cov = self.kf.filter_update(filtered_state_mean = self.state_mean, filtered_state_covariance = self.state_cov, observation = error_new, observation_matrix = obs)
         self.state_mean = new_m.data
         self.state_cov = new_cov
         pass

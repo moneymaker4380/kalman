@@ -36,14 +36,15 @@ class Coint:
         # eg spread = train.asset2 - model.params[0] * train.asset1
         adf = adfuller(self.errorDF, autolag='BIC')
         #set maxlag = 0?
-        #or adf = adfuller(spread, autolag='BIC')
         print('ADF Statistic: ', adf[0])
         print('p-value: ', adf[1])
         #critical values
         print(adf[4])
         pass
 
-    def residual(self):
+    def residual(self, y, x): #x horizontal is one observation, etf logR but not yet added 1
+        x = np.insert(x,0,1,axis=1)
+        residuals = (y-x.dot(self.beta))/np.sqrt(self.beta.dot(self.beta))
+        return residuals
 
-        pass
-
+    

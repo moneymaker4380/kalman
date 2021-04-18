@@ -15,23 +15,23 @@ class Strategy(bt.Strategy):
         dt = dt or self.datas[0].datetime.date(0)
         print('%s, %s' % (dt.isoformat(), txt))
 
-    def notify_order(self, order):
-        if order.status in [order.Submitted, order.Accepted]:
-            # Buy/Sell order submitted/accepted to/by broker - Nothing to do
-            return
-
-        # Check if an order has been completed
-        # Attention: broker could reject order if not enough cash
-        if order.status in [order.Completed]:
-            if order.isbuy():
-                self.log('BUY EXECUTED, %.2f' % order.executed.price)
-            elif order.issell():
-                self.log('SELL EXECUTED, %.2f' % order.executed.price)
-
-            self.bar_executed = len(self)
-
-        elif order.status in [order.Canceled, order.Margin, order.Rejected]:
-            self.log('Order Canceled/Margin/Rejected')
+    # def notify_order(self, order):
+    #     if order.status in [order.Submitted, order.Accepted]:
+    #         # Buy/Sell order submitted/accepted to/by broker - Nothing to do
+    #         return
+    #
+    #     # Check if an order has been completed
+    #     # Attention: broker could reject order if not enough cash
+    #     if order.status in [order.Completed]:
+    #         if order.isbuy():
+    #             self.log('BUY EXECUTED, %.2f' % order.executed.price)
+    #         elif order.issell():
+    #             self.log('SELL EXECUTED, %.2f' % order.executed.price)
+    #
+    #         self.bar_executed = len(self)
+    #
+    #     elif order.status in [order.Canceled, order.Margin, order.Rejected]:
+    #         self.log('Order Canceled/Margin/Rejected')
 
 
     def __init__(self):
@@ -41,8 +41,8 @@ class Strategy(bt.Strategy):
         self.stat = open('position.csv', mode='w')
         self.stat.write(','.join(['']+[d._name for d in self.datas]+['\n']))
         self.initBool = False
-
         self.inds = dict()
+        self.feed_dict = dict()
         for i, d in enumerate(self.datas):
             self.inds[d] = dict()
             self.inds[d]['log_return'] = LogReturn(d)
@@ -53,20 +53,21 @@ class Strategy(bt.Strategy):
         pass
 
     def next(self):
-        if ((not self.initBool) and (len(self) == 300)):
+        if ((not self.initBool) and (len(self) == 2820)):
             for i, d in enumerate(self.datas):
                 self.feed_dict[d._name] = i
-            coint = Coint(self,self.feed_dict,'AAPL',['MTUM','VLUE','QUAL','USMV'],300)
+            coint = Coint(self,self.feed_dict,'AAPL',['VTV','VUG'],300)
             print(coint.beta)
             print(coint.t_stat, coint.p_lags)
             kf = Kalman(coint.residuals,coint.p_lags,-2.0)
+            print(kf.tStat())
+            self.initBool = True
         else:
-            feed_dict = dict()
-            self.stat.write(str(self.datetime.datetime(ago=0)) + ',')
+            # self.stat.write(str(self.datetime.datetime(ago=0)) + ',')
             for i, d in enumerate(self.datas):
-                self.log(f'{d._name} Close, {d.close[0]}')
+                # self.log(f'{d._name} Close, {d.close[0]}')
                 #self.log(f'{d._name} Position: {self.broker.getposition(d)}')
-                self.stat.write(str(self.broker.getposition(d).size)+',')
+                # self.stat.write(str(self.broker.getposition(d).size)+',')
                 if len(self) % (252) == (0):
                     self.buy(d,size=10000)
                 elif len(self) % (252) == 126:

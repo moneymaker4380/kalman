@@ -26,17 +26,18 @@ if __name__ == "__main__":
     #     print(ticker)
     #     cerebro1.adddata(stock,name=ticker)
     # for ticker in data.etf_list():
-    #     etf = data.cerebro_etf(ticker)
-    #     print(ticker)
-    #     cerebro1.adddata(etf,name=ticker)
+    for ticker in ['MTUM','VLUE','QUAL','USMV']:
+        etf = data.cerebro_etf(ticker)
+        print(ticker)
+        cerebro1.adddata(etf,name=ticker)
 
-    pep = data.cerebro_stock('PEP')
-    pep.plotinfo.plot = False
-    cerebro1.adddata(pep, name='PEP')
-
-    ko = data.cerebro_stock('KO')
-    ko.plotinfo.plot = False
-    cerebro1.adddata(ko, name='KO')
+    # pep = data.cerebro_stock('PEP')
+    # pep.plotinfo.plot = False
+    # cerebro1.adddata(pep, name='PEP')
+    #
+    # ko = data.cerebro_stock('KO')
+    # ko.plotinfo.plot = False
+    # cerebro1.adddata(ko, name='KO')
 
     # data0 = bt.feeds.YahooFinanceData(dataname='SPY', fromdate=datetime(2006, 1, 1), todate=datetime(2020, 12, 31))
     # cerebro1.adddata(data0, name='SPY')

@@ -10,9 +10,10 @@ class Kalman:
         self.p_lags = p_lags
         self.error_sd = self.error_df.std().squeeze()
         self.adf_threshold = adf_threshold
+        self.create()
         pass
 
-    def create(self, error_cov):
+    def create(self):
         lags = self.error_df.diff()
         self.obs = [pd.DataFrame(np.ones_like(self.error_df)), self.error_df.shift(1)]
         self.obs.extend(list(map(lambda x: lags.shift(x), range(1,self.p_lags+1))))
@@ -22,8 +23,7 @@ class Kalman:
         self.obs.fillna(0, inplace=True)
         self.kf = KalmanFilter(transition_matrices = np.eye(2 + self.p_lags - 1 ),
                                observation_matrices = self.obs.to_numpy()[:,np.newaxis],
-                               observation_covariance = error_cov,
-                               em_vars='transition_covariance, initial_state_mean, initial_state_covariance')
+                               em_vars='transition_covariance, observation_covariance, initial_state_mean, initial_state_covariance')
         means, covs = self.kf.filter(self.error_df)
         self.state_mean = means[-1]
         self.state_cov = covs[-1]

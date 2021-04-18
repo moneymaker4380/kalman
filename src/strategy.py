@@ -5,7 +5,8 @@ import scipy.odr as odr
 from datetime import datetime
 import csv
 from log_return import LogReturn
-
+from coint import Coint
+from kalman import Kalman
 
 class Strategy(bt.Strategy):
 
@@ -39,6 +40,7 @@ class Strategy(bt.Strategy):
         self.dataclose = self.datas[0].close
         self.stat = open('position.csv', mode='w')
         self.stat.write(','.join(['']+[d._name for d in self.datas]+['\n']))
+        self.initBool = False
 
         self.inds = dict()
         for i, d in enumerate(self.datas):
@@ -51,21 +53,25 @@ class Strategy(bt.Strategy):
         pass
 
     def next(self):
-        feed_dict = dict()
-        self.stat.write(str(self.datetime.datetime(ago=0)) + ',')
-
-        for i, d in enumerate(self.datas):
-            feed_dict[d._name] = i
-        for i, d in enumerate(self.datas):
-            self.log(f'{d._name} Close, {d.close[0]}')
-            #self.log(f'{d._name} Position: {self.broker.getposition(d)}')
-            self.stat.write(str(self.broker.getposition(d).size)+',')
-            if len(self) % (252) == (0):
-                self.buy(d,size=10000)
-            elif len(self) % (252) == 126:
-                self.sell(d,size=10000)
-        self.stat.write('\n')
-
+        if ((not self.initBool) and (len(self) == 300)):
+            for i, d in enumerate(self.datas):
+                self.feed_dict[d._name] = i
+            coint = Coint(self,self.feed_dict,'AAPL',['MTUM','VLUE','QUAL','USMV'],300)
+            print(coint.beta)
+            print(coint.t_stat, coint.p_lags)
+            kf = Kalman(coint.residuals,coint.p_lags,-2.0)
+        else:
+            feed_dict = dict()
+            self.stat.write(str(self.datetime.datetime(ago=0)) + ',')
+            for i, d in enumerate(self.datas):
+                self.log(f'{d._name} Close, {d.close[0]}')
+                #self.log(f'{d._name} Position: {self.broker.getposition(d)}')
+                self.stat.write(str(self.broker.getposition(d).size)+',')
+                if len(self) % (252) == (0):
+                    self.buy(d,size=10000)
+                elif len(self) % (252) == 126:
+                    self.sell(d,size=10000)
+            self.stat.write('\n')
 
     def stop(self):
 

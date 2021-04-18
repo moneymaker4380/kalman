@@ -1,0 +1,70 @@
+Index: src/__init__.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>###\n# testing\n###\nimport numpy as np\nimport pandas as pd\nfrom pykalman import KalmanFilter\nimport statsmodels.sandbox.tools.tools_pca as spca\nimport statsmodels.api as ols\nfrom datetime import datetime\nimport backtrader as bt\nfrom matplotlib import pyplot as plt\nfrom strategy import Strategy\nfrom get_data import GetData\n\nif __name__ == \"__main__\":\n    # Create a cerebro entity\n    cerebro1 = bt.Cerebro()\n    cerebro1.broker.setcash(10000000.0)\n    cerebro1.broker.set_coc(True)\n\n\n    data = GetData()\n    # for ticker in data.etf_list():\n    #     stock = data.cerebro_stock(ticker)\n    #     print(ticker)\n    #     cerebro1.adddata(stock)\n\n    pep = data.cerebro_stock('PEP')\n    cerebro1.adddata(pep, name='PEP')\n\n    # ko = data.cerebro_stock('KO')\n    # cerebro1.adddata(ko, name='KO')\n\n    #data0 = bt.feeds.YahooFinanceData(dataname='MSFT', fromdate=datetime(2011, 1, 1), todate=datetime(2012, 12, 31))\n    #cerebro1.adddata(data0, name='KO')\n\n\n    cerebro1.addstrategy(Strategy)\n\n    cerebro1.addanalyzer(bt.analyzers.Calmar, _name='Calmar')\n    cerebro1.addanalyzer(bt.analyzers.SharpeRatio, _name='SharpeRatio')\n    cerebro1.addanalyzer(bt.analyzers.DrawDown, _name='DD')\n    cerebro1.addanalyzer(bt.analyzers.Returns, _name='Return')\n    cerebro1.addanalyzer(bt.analyzers.TimeReturn, _name='CumulativeReturn')\n\n    print('Starting Portfolio Value: %.2f' % cerebro1.broker.getvalue())\n    run_time = cerebro1.run()\n    run = run_time[0]\n\n    print('Annualized Return:', run.analyzers.Return.get_analysis()['rnorm'])\n    print('Cumulative Return:', run.analyzers.CumulativeReturn.get_analysis()[datetime(2020,12,31)])\n    print('Sharpe Ratio:', run.analyzers.SharpeRatio.get_analysis()['sharperatio'])\n    print('Maximum Drawdown:', run.analyzers.DD.get_analysis()['max']['drawdown'])\n    print('Calmar Ratio:', run.analyzers.Calmar.calmar)\n\n    print('Final Portfolio Value: %.2f' % cerebro1.broker.getvalue())\n\n    cerebro1.plot(iplot=False)\n\n\n# #Kalman Filter\n# xreduced, factors, evals, evecs =spca.pca(data=return, keepdim=I)\n#\n# factors = ols.add_constant(factors)\n#\n# obs_matrix = np.array(factors)[:,np.newaxis]\n#\n#\n# from sklearn.decomposition import PCA\n# pca = PCA(n_components = 6)\n# pca.fit(return0)\n# pca.explained_variance_ratio_.cumsum()\n# print('The shape of the array after PCA is: ' , pca.components_.T.shape)\n#\n# cov_mat = np.cov(return1)\n# eigen_vals, eigen_vecs = np.linalg.eig(cov_mat)\n# tot = sum(eigen_vals)\n# var_exp = [(i / tot) for i in sorted(eigen_vals, reverse=True)]\n# cum_var_exp = np.cumsum(var_exp)\n# print(cum_var_exp）\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/__init__.py	(revision 9012d6b9693e7deac5af8f0b5630693ef88784b0)
++++ src/__init__.py	(date 1618673844754)
+@@ -4,8 +4,8 @@
+ import numpy as np
+ import pandas as pd
+ from pykalman import KalmanFilter
+-import statsmodels.sandbox.tools.tools_pca as spca
+-import statsmodels.api as ols
++# import statsmodels.sandbox.tools.tools_pca as spca
++# import statsmodels.api as ols
+ from datetime import datetime
+ import backtrader as bt
+ from matplotlib import pyplot as plt
+Index: src/coint.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import scipy.odr as odr\nimport pandas as pd\nfrom statsmodels.tsa.stattools import adfuller\nfrom get_data import GetData\n\nclass Coint:\n    def __init__(self,feed,stock,etfs):\n        data = GetData()\n        #should be called in sth like next() in strat\n        feed_dict = dict()\n        for i,d in enumerate(feed.datas):\n            feed_dict[d._name] = i\n        self.stock_ret = pd.Series(feed.datas[feed_dict[stock]].close).pct_change().dropna()\n        ret_list = []\n        for etf in etfs:\n            ret = pd.Series(feed.datas[feed_dict[etf]].close).pct_change().dropna()\n            ret_list.append(ret)\n        self.etf_ret = pd.DataFrame(ret_list).T\n        pass\n\n    def regression(self):\n        x = self.stock_ret.to_numpy()\n        y = self.etf_ret.T.to_numpy()\n        linmod = odr.Model(odr.multilinear.fcn)\n        data = odr.Data(x, y)\n        odrfit = odr.ODR(data, linmod, beta0=[1., 1., 1.])\n        odrres = odrfit.run()\n        odrres.pprint()\n        pass\n\n    def adf(self):\n        # eg spread = train.asset2 - model.params[0] * train.asset1\n        adf = adfuller(spread, maxlag=1)\n        #set maxlag = 0?\n        #or adf = adfuller(spread, autolag='BIC')\n        print('ADF Statistic: ', adf[0])\n        print('p-value: ', adf[1])\n        #critical values\n        print(adf[4])\n        pass\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/coint.py	(revision 9012d6b9693e7deac5af8f0b5630693ef88784b0)
++++ src/coint.py	(date 1618725703102)
+@@ -1,4 +1,5 @@
+ import scipy.odr as odr
++import numpy as np
+ import pandas as pd
+ from statsmodels.tsa.stattools import adfuller
+ from get_data import GetData
+@@ -19,18 +20,17 @@
+         pass
+ 
+     def regression(self):
+-        x = self.stock_ret.to_numpy()
+-        y = self.etf_ret.T.to_numpy()
+-        linmod = odr.Model(odr.multilinear.fcn)
+-        data = odr.Data(x, y)
+-        odrfit = odr.ODR(data, linmod, beta0=[1., 1., 1.])
+-        odrres = odrfit.run()
+-        odrres.pprint()
++        y = self.stock_ret.to_numpy()
++        x = self.etf_ret.T.to_numpy()
++        data = odr.Data(x, y) #x vertical is one observation
++        odrfit = odr.ODR(data,odr.models.multilinear)
++        odroutput = odrfit.run()
++        self.beta = odroutput.beta
+         pass
+ 
+     def adf(self):
+         # eg spread = train.asset2 - model.params[0] * train.asset1
+-        adf = adfuller(spread, maxlag=1)
++        adf = adfuller(self.errorDF, autolag='BIC')
+         #set maxlag = 0?
+         #or adf = adfuller(spread, autolag='BIC')
+         print('ADF Statistic: ', adf[0])
+@@ -38,3 +38,8 @@
+         #critical values
+         print(adf[4])
+         pass
++
++    def residual(self):
++
++        pass
++

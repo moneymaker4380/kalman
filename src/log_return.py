@@ -5,9 +5,10 @@ import math
 
 
 class LogReturn(bt.Indicator):
-    plotlines = dict(logreturns=dict())
+    #plotlines = dict(logreturns=dict())
 
     lines = ('logreturns',)
+    plotinfo = dict(plot=False)
 
 
     def next(self):

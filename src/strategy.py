@@ -66,14 +66,17 @@ class Strategy(bt.Strategy):
                 self.feed_dict[d._name] = i
             self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             self.pair_ratio = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
-            for ticker in stocks_list:
-                coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=-2.0)
-                if coint.asr() > 1 and coint.t_stat <= -2.0:
-                    self.powerStat.append(coint.t_stat)  #powerStat()
-                else:
-                    self.powerStat.append(0)
-            for ticker in np.array(stocks_list)[np.argsort(self.powerStat)[-20:][::-1]]:
+            self.pending_list, self.active_list = self.initialize(stocks_list)
+            for ticker in np.array(self.active_list)[np.argsort(self.powerStat)[-max(20,len(self.active_list)):][::-1]]:
                 self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
+            # for ticker in stocks_list:
+            #     coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=-2.0)
+            #     if coint.asr() > 1 and coint.t_stat <= -2.0:
+            #         self.powerStat.append(coint.t_stat)  #powerStat()
+            #     else:
+            #         self.powerStat.append(0)
+            # for ticker in np.array(stocks_list)[np.argsort(self.powerStat)[-20:][::-1]]:
+            #     self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
             """
             print(coint.beta)
             print(coint.t_stat, coint.p_lags)
@@ -100,6 +103,11 @@ class Strategy(bt.Strategy):
             #             self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold=-2.0)
             # # signals = [{'MSFT': 1, 'VTV': -0.5, 'VUG': -0.5}]  # Presented in ratios (stock comes first)
             # self.lastRebelance = len(self)
+            print(self.datetime.datetime(ago=0))
+            self.pending_list , temp = self.initialize(self.pending_list)
+            self.active_list = self.active_list + temp
+            for ticker in np.array(temp)[np.argsort(self.powerStat)[-max(20,len(self.active_list)):][::-1]]:
+                self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
             signals = []
             for ticker in list(self.coint_dict.keys()):
                 y = np.log(self.datas[self.feed_dict[ticker]].close[0]/self.coint_dict[ticker].reference_price[ticker])
@@ -124,7 +132,6 @@ class Strategy(bt.Strategy):
                 for pair in self.current_pairs:
                     for tick in self.pair_ratio.loc[pair][0]:
                         self.tarpos.loc[tick] += self.pair_ratio.loc[pair][0][tick]/len(self.current_pairs)
-                        print(self.datas[self.feed_dict[tick]])
                 #Close position of stocks
                 self.tarpos = self.tarpos.astype('int')
                 if len(self.close_pairs)>0:
@@ -160,8 +167,20 @@ class Strategy(bt.Strategy):
             self.stat.write('\n')
             #print(self.positionsbyname['MSFT'])
     
-    def close_pos(self,signal):
-        pass
+    def initialize(self,stocks):
+        pending = []
+        active = []
+        for ticker in stocks:
+            if len(self.datas[self.feed_dict[ticker]].close) <300:
+                pending.append(ticker)
+            else:
+                coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=-2.0)
+                active.append(ticker)
+                if coint.asr() > 1 and coint.t_stat <= -2.0:
+                    self.powerStat.append(coint.t_stat)  #powerStat()
+                else:
+                    self.powerStat.append(0)
+        return pending, active
     
     def stop(self):
 

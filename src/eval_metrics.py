@@ -12,7 +12,7 @@ class EvalMetrics:
         return Sharpe
 
     def sortino(self):
-        downsidereturn = df0.loc[df0['returns'] < 0.0]
+        downsidereturn = df0.loc[df0['returns'] < 0.0] #df0 is created somewhere else
         Sortino = ((self.logreturn.mean() - self.rfrate) / downsidereturn.std())
         return Sortino
 

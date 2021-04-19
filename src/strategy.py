@@ -70,7 +70,7 @@ class Strategy(bt.Strategy):
                 else:
                     self.powerStat.append(0)
             for ticker in np.array(stocks_list)[np.argsort(self.powerStat)[-15:]]:
-                self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adr_threshold=-2.0)
+                self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
             """
             print(coint.beta)
             print(coint.t_stat, coint.p_lags)

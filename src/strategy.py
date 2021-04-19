@@ -64,7 +64,7 @@ class Strategy(bt.Strategy):
             self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             self.pair_ratio = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             for ticker in stocks_list:
-                coint = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adr_threshold=-2.0)
+                coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=-2.0)
                 if coint.asr() > 1 and coint.t_stat <= -2.0:
                     self.powerStat.append(coint.powerStat())
                 else:

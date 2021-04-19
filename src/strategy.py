@@ -67,7 +67,7 @@ class Strategy(bt.Strategy):
             self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             self.pair_ratio = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             self.pending_list, self.active_list = self.initialize(stocks_list)
-            for ticker in np.array(self.active_list)[np.argsort(self.powerStat)[-max(20,len(self.active_list)):][::-1]]:
+            for ticker in np.array(self.active_list)[np.argsort(self.powerStat)[-min(20,len(self.active_list)):][::-1]]:
                 self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
             # for ticker in stocks_list:
             #     coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=-2.0)
@@ -106,7 +106,7 @@ class Strategy(bt.Strategy):
             print(self.datetime.datetime(ago=0))
             self.pending_list , temp = self.initialize(self.pending_list)
             self.active_list = self.active_list + temp
-            for ticker in np.array(temp)[np.argsort(self.powerStat)[-max(20,len(self.active_list)):][::-1]]:
+            for ticker in np.array(temp)[np.argsort(self.powerStat)[-min(20,len(self.active_list)):][::-1]]:
                 self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
             signals = []
             for ticker in list(self.coint_dict.keys()):

@@ -21,7 +21,7 @@ class GetData:
         self.etf_dict = {'last':self.ETF_PX_LAST,'volume':self.ETF_PX_VOLUME,
                          'high':self.ETF_PX_HIGH,'open':self.ETF_PX_OPEN,
                          'low':self.ETF_PX_LOW,'vwap_volume':self.ETF_VWAP_VOLUME,
-                         'fund_net_asset_value':self.ETF_FUND_NET_ASSET_VAL,
+                         #'fund_net_asset_value':self.ETF_FUND_NET_ASSET_VAL,
                          'equity_weighted_average_price':self.ETF_EQY_WEIGHTED_AVG_PX}
         pass
     

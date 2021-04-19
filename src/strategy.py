@@ -43,6 +43,7 @@ class Strategy(bt.Strategy):
         self.initBool = False
         self.inds = dict()
         self.feed_dict = dict()
+        self.current_pairs = [] #Assume pairs named by the stock in the pair
         for i, d in enumerate(self.datas):
             self.inds[d] = dict()
             self.inds[d]['log_return'] = LogReturn(d)
@@ -54,28 +55,81 @@ class Strategy(bt.Strategy):
 
     def next(self):
         if ((not self.initBool) and (len(self) == 2820)):
+            
             for i, d in enumerate(self.datas):
                 self.feed_dict[d._name] = i
+            self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
+            self.pair_ratio = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             coint = Coint(self,self.feed_dict,'MSFT',['VTV','VUG'],300)
+            """
             print(coint.beta)
             print(coint.t_stat, coint.p_lags)
             kf = Kalman(coint.residuals,-2.0,coint.adf_betas,coint.adf_betas_cov,coint.adf_res_var)
             print(kf.state_mean)
             print(np.diag(kf.state_cov))
             print(kf.tStat())
+            """
             self.initBool = True
-        else:
+        elif((self.initBool) and (len(self) >= 2820)):
             # self.stat.write(str(self.datetime.datetime(ago=0)) + ',')
-            for i, d in enumerate(self.datas):
-                # self.log(f'{d._name} Close, {d.close[0]}')
-                #self.log(f'{d._name} Position: {self.broker.getposition(d)}')
-                # self.stat.write(str(self.broker.getposition(d).size)+',')
-                if len(self) % (252) == (0):
-                    self.buy(d,size=10000)
-                elif len(self) % (252) == 126:
-                    self.sell(d,size=10000)
-            self.stat.write('\n')
+            ############################################################
+            ############################################################
+            ########## DEAL WITH SIGNAL AND GENERATE TARGET POS ########
+            ############################################################
+            ############################################################
+            signals = [{'MSFT':1,'VTV':-0.5,'VUG':-0.5}] #Presented in ratios (stock comes first)
+            if len(signals)!=0:
+                #reset tar pos
+                self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
+                self.close_pairs = []
+                for signal in signals:
+                    ##cannot pass as list
+                    if str(next(iter(signal))) not in self.current_pairs:
+                        self.current_pairs.append(list(signal.keys())[0])
+                        self.pair_ratio.loc[list(signal.keys())[0]] = [signal]
+                    else:
+                        self.current_pairs.remove(list(signal.keys())[0])
+                        self.pair_ratio.loc[list(signal.keys())[0]] = np.nan
+                        self.close_pairs.append(list(signal.keys())[0])
+                for pair in self.current_pairs:
+                    for tick in self.pair_ratio.loc[pair][0]:
+                        self.tarpos.loc[tick] += self.pair_ratio.loc[pair][0][tick]/len(self.current_pairs)
+                        print(self.datas[self.feed_dict[tick]])
+                #Close position of stocks
+                self.tarpos = self.tarpos.astype('int')
+                if len(self.close_pairs)>0:
+                    for tick in self.close_pairs:
+                        order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=0)
+                        print(order)
+                        order = self.broker.submit(order)
+                if len(self.current_pairs)>0:
+                    for tick in self.current_pairs:
+                        order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
+                        print(order)
+                        order = self.broker.submit(order)
+                for tick in ['VTV','VUG']:
+                    order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
+                    print(order)
+                    if order is not None:
+                        order = self.broker.submit(order)
 
+                """
+                for i, d in enumerate(self.datas):
+                    # self.log(f'{d._name} Close, {d.close[0]}')
+                    #self.log(f'{d._name} Position: {self.broker.getposition(d)}')
+                    # self.stat.write(str(self.broker.getposition(d).size)+',')
+                    pos = self.getposition(d).size
+                    if len(self) % (252) == (0):
+                        self.buy(d,size=10000)
+                    elif len(self) % (252) == 126:
+                        self.sell(d,size=10000)
+                """
+            self.stat.write('\n')
+            #print(self.positionsbyname['MSFT'])
+    
+    def close_pos(self,signal):
+        pass
+    
     def stop(self):
 
 

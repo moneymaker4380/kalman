@@ -36,8 +36,9 @@ class Strategy(bt.Strategy):
 
 
     def __init__(self):
-        self.adf_threshold = -2.0
+        self.adf_threshold = -1.6
         self.pairs_num = 20
+        self.vacancy = self.pairs_num
         self.init_days = 2520
         self.last_rebel = 0
         self.rebal_period = 30
@@ -160,33 +161,48 @@ class Strategy(bt.Strategy):
                 #reset tar pos
                 self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
                 self.close_pairs = []
+                new_pairs = []
                 for signal in signals:
                     ##cannot pass as list
+                    #print(signal)
                     if pd.Series(list(signal.keys()))[0] not in self.current_pairs:
                         self.current_pairs.append(list(signal.keys())[0])
                         self.pair_ratio.loc[list(signal.keys())[0]] = [signal]
+                        new_pairs.append(signal)
                     else:
                         self.current_pairs.remove(list(signal.keys())[0])
                         self.pair_ratio.loc[list(signal.keys())[0]] = np.nan
                         self.close_pairs.append(list(signal.keys())[0])
-                for pair in self.current_pairs:
-                    for tick in self.pair_ratio.loc[pair][0]:
-                        self.tarpos.loc[tick] += self.pair_ratio.loc[pair][0][tick]/len(self.current_pairs)
+
                         # print(self.datas[self.feed_dict[tick]])
                 #Close position of stocks
-                self.tarpos = self.tarpos.astype('int')
+                #self.tarpos = self.tarpos.astype('int')
                 if len(self.close_pairs)>0:
                     for tick in self.close_pairs:
-                        order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=0)
+                        order = self.order_target_value(self.datas[self.feed_dict[tick]],target=0)
                         print(order)
+                    self.vacancy = self.vacancy + len(self.close_pairs)
                         #order = self.broker.submit(order)
+
+                curr_cash = self.broker.getcash()
+                nominal = curr_cash/self.vacancy
+
+                if len(signals) - len(self.close_pairs) > 0:
+                    self.vacancy = self.vacancy - (len(signals) - len(self.close_pairs))
+
+                for pair in new_pairs:
+                    total_beta = sum(np.abs(list(pair.values())))
+                    unit = nominal/total_beta
+                    for tick, beta in pair.items():
+                        self.tarpos.loc[tick] = unit*beta
+
                 if len(self.current_pairs)>0:
                     for tick in self.current_pairs:
-                        order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
+                        order = self.order_target_value(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
                         print(order)
                         #order = self.broker.submit(order)
                 for tick in ['QUAL','USMV','VLUE','MTUM']:
-                    order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
+                    order = self.order_target_value(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
                     print(order)
                     #if order is not None:
                         #order = self.broker.submit(order)

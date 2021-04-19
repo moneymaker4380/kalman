@@ -28,6 +28,7 @@ class Coint:
         # self.residuals = pd.DataFrame(self.residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy()), index=self.stock_ret.index)
         self.adf(self.residuals)
         self.res_std = np.std(self.residuals,ddof=1)
+        print(self.stock,self.powerStat(),self.t_stat)
         pass
 
     def log_ret(self,tick,feed,period):
@@ -75,10 +76,10 @@ class Coint:
     def signal(self):
         sig = dict()
         multiplyer = 1
-        if (self.powerStat() < 1.25 and self.openPos):
+        if (self.powerStat() < 1.1 and self.openPos):
             multiplyer = 0
             self.eliminate = True
-        elif not self.openPos and self.powerStat() > 1.75:
+        elif not self.openPos and self.powerStat() > 1.3:
             if self.sr() > 0:
                 multiplyer = -1
                 self.openPos = True

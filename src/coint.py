@@ -31,7 +31,7 @@ class Coint:
         pass
 
     def log_ret(self,tick,feed,period):
-        print(tick)
+        # print(tick)
         data = pd.Series(feed.datas[self.feed_dict[tick]].close.array)
         data = data.iloc[-period:] #no timestamp combining list of Series
         self.reference_price[tick] = data.iloc[0]

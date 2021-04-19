@@ -71,20 +71,24 @@ class Strategy(bt.Strategy):
             self.pair_ratio = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             stocks_list = [d._name for d in self.datas][4:]
             self.pending_list, self.active_list = self.initialize(stocks_list)
-            init_pair = dict()
             power_stat = []
             for ticker in self.active_list:
                 coint = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold=self.adf_threshold)
                 if abs(coint.sr()) > self.min_asr and coint.t_stat <= self.adf_threshold:
-                    init_pair[ticker] = coint
                     power_stat.append(coint.powerStat())
                 else:
                     power_stat.append(-1)
             power_stat = np.array(power_stat)
             accepted = np.argwhere(power_stat > -1)
-            accepted_order = accepted[np.argsort[power_stat[accepted]][::-1]]
-            for ticker in power_stat[accepted_order[:min(self.pairs_num,len(self.active_list))]]:
-                self.coint_dict[ticker] = init_pair[ticker]
+            accepted_order = np.array([accepted[np.argsort(power_stat[accepted])[::-1]].squeeze()])
+
+            if len(accepted_order) > self.pairs_num:
+                tempticker = np.array(self.active_list)[accepted_order[:min(self.pairs_num,len(self.active_list))]]
+            else:
+                tempticker = np.array(self.active_list)[accepted_order]
+
+            for ticker in tempticker:
+                self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold = self.adf_threshold)
             if len(self.coint_dict.keys()) <= self.pairs_num/2:
                 self.stopFindPair = True
             """
@@ -106,7 +110,6 @@ class Strategy(bt.Strategy):
                     self.feed_dict[d._name] = i
                 self.pending_list, self.active_list = self.initialize(stocks_list)
                 if len(self.active_list) > 0:
-                    new_pair = dict()
                     power_stat = []
                     curr_pair = list(self.coint_dict.keys())
                     for ticker in self.active_list:
@@ -115,17 +118,22 @@ class Strategy(bt.Strategy):
                             continue
                         coint = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold = self.adf_threshold)
                         if (abs(coint.sr()) > self.min_asr) and (coint.t_stat <= self.adf_threshold):
-                            new_pair[ticker] = coint
                             power_stat.append(coint.powerStat())
                         else:
                             power_stat.append(-1)
                     power_stat = np.array(power_stat)
                     accepted = np.argwhere(power_stat > -1)
-                    accepted_order = accepted[np.argsort[power_stat[accepted]][::-1]]
-                    for ticker in power_stat[accepted_order[:min(self.pairs_num,len(self.active_list))]]:
+                    accepted_order = np.array([accepted[np.argsort(power_stat[accepted])[::-1]].squeeze()])
+
+                    if len(accepted_order) > self.pairs_num:
+                        tempticker = np.array(self.active_list)[accepted_order[:min(self.pairs_num, len(self.active_list))]]
+                    else:
+                        tempticker = np.array(self.active_list)[accepted_order]
+
+                    for ticker in tempticker:
                         if len(self.coint_dict) >= self.pairs_num:
                             break
-                        self.coint_dict[ticker] = new_pair[ticker]
+                        self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold = self.adf_threshold)
                     if len(self.coint_dict) <= self.pairs_num / 2:
                         self.stopFindPair = True
                     else:
@@ -147,7 +155,7 @@ class Strategy(bt.Strategy):
                 self.close_pairs = []
                 for signal in signals:
                     ##cannot pass as list
-                    if pd.Series(signal.keys())[0] not in self.current_pairs:
+                    if pd.Series(list(signal.keys()))[0] not in self.current_pairs:
                         self.current_pairs.append(list(signal.keys())[0])
                         self.pair_ratio.loc[list(signal.keys())[0]] = [signal]
                     else:
@@ -179,17 +187,9 @@ class Strategy(bt.Strategy):
             for ticker in list(self.coint_dict.keys()):
                 if self.coint_dict[ticker].eliminate:
                     self.coint_dict.pop(ticker)
-                """
-                for i, d in enumerate(self.datas):
-                    # self.log(f'{d._name} Close, {d.close[0]}')
-                    #self.log(f'{d._name} Position: {self.broker.getposition(d)}')
-                    # self.stat.write(str(self.broker.getposition(d).size)+',')
-                    pos = self.getposition(d).size
-                    if len(self) % (252) == (0):
-                        self.buy(d,size=10000)
-                    elif len(self) % (252) == 126:
-                        self.sell(d,size=10000)
-                """
+            self.stat.write(str(self.datetime.datetime(ago=0)) + ',')
+            for i, d in enumerate(self.datas):
+                self.stat.write(str(self.broker.getposition(d).size) + ',')
             self.stat.write('\n')
             #print(self.positionsbyname['MSFT'])
     
@@ -200,12 +200,8 @@ class Strategy(bt.Strategy):
             if len(self.datas[self.feed_dict[ticker]].close) <300:
                 pending.append(ticker)
             else:
-                coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=-2.0)
                 active.append(ticker)
-                if abs(coint.sr()) > 1 and coint.t_stat <= -2.0:
-                    self.powerStat.append(coint.t_stat)  #powerStat()
-                else:
-                    self.powerStat.append(0)
+
         return pending, active
     
     def stop(self):

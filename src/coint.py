@@ -26,6 +26,7 @@ class Coint:
         self.update_residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy())
         # self.residuals = pd.DataFrame(self.residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy()), index=self.stock_ret.index)
         self.adf(self.residuals)
+        self.res_std = np.std(self.residuals,ddof=1)
         pass
 
     def log_ret(self,tick,feed,period):
@@ -41,13 +42,14 @@ class Coint:
         data = odr.Data(x=x, y=y) #x vertical is one observation
         odrfit = odr.ODR(data,odr.models.multilinear)
         odroutput = odrfit.run()
-        odroutput.pprint()
+        # odroutput.pprint()
         self.beta = odroutput.beta
         return
 
     def adf(self, errors):
         adf = adfuller(errors, autolag='BIC')
         self.t_stat = adf[0]
+        # print(self.stock, self.t_stat)
         self.p_lags = adf[2]
         # print('p-value: ', adf[1])
         #critical values
@@ -61,18 +63,18 @@ class Coint:
         pass
 
     def sr(self):
-        return self.residuals[-1]/np.std(self.residuals,ddof=1)
+        return self.residuals[-1]/self.res_std
 
     def asr(self):
-        return abs(self.residuals[-1]/np.std(self.residuals,ddof=1))
+        return abs(self.residuals[-1]/self.res_std)
 
     def powerStat(self):
         return self.asr()**(self.adf_threshold - self.t_stat)
-    
+
     def signal(self):
         sig = dict()
         multiplyer = 1
-        if self.powerStat() < 1.1:
+        if self.t_stat < -2.0:
             if self.openPos:
                 multiplyer = 0
                 self.openPos = False
@@ -80,8 +82,8 @@ class Coint:
                 multiplyer = 5
             self.eliminate = True
         else:
-            if not self.openPos and self.asr() > 2:
-                if self.sr() > 1:
+            if not self.openPos and self.asr() > 1.5:
+                if self.sr() < 0:
                     multiplyer = -1
                 self.openPos = True
             elif self.openPos and self.asr() < 0.5:

@@ -63,13 +63,13 @@ class Strategy(bt.Strategy):
             self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             self.pair_ratio = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             for ticker in list(self.feed_dict.keys()):
-                coint = Coint(self,self.feed_dict,ticker,['VTV','VUG'],300,adr_threshold=-2.0)
+                coint = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adr_threshold=-2.0)
                 if coint.asr() > 1 and coint.t_stat <= -2.0:
                     self.powerStat.append(coint.powerStat())
                 else:
                     self.powerStat.append(0)
             for ticker in list(self.feed_dict.keys())[np.argsort(self.powerStat)[:15]]:
-                self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['VTV','VUG'],300,adr_threshold=-2.0)
+                self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adr_threshold=-2.0)
             """
             print(coint.beta)
             print(coint.t_stat, coint.p_lags)
@@ -80,8 +80,8 @@ class Strategy(bt.Strategy):
             """
             self.initBool = True
         elif((self.initBool) and (len(self) >= 2820)):
-            for ticker in stocks_list:
-
+            #for ticker in stocks_list:
+                #pass
 
             signals = [{'MSFT':1,'VTV':-0.5,'VUG':-0.5}] #Presented in ratios (stock comes first)
             if len(signals)!=0:
@@ -102,7 +102,7 @@ class Strategy(bt.Strategy):
                         self.tarpos.loc[tick] += self.pair_ratio.loc[pair][0][tick]/len(self.current_pairs)
                         print(self.datas[self.feed_dict[tick]])
                 #Close position of stocks
-                self.tarpos = self.tarpos.astype('int')
+                #self.tarpos = self.tarpos.astype('int') (No need int coz %?)
                 if len(self.close_pairs)>0:
                     for tick in self.close_pairs:
                         order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=0)

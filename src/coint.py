@@ -10,6 +10,8 @@ class Coint:
         #period in trading days
         self.adr_threshold = adr_threshold
         self.feed_dict = feed_dict
+        self.stock = stock
+        self.etfs = etfs
         self.stock_ret = self.log_ret(stock,feed,period).ffill()
         ret_list = []
         for etf in etfs:
@@ -62,5 +64,10 @@ class Coint:
 
     def powerStat(self):
         return self.asr()**(self.adf_threshold - self.tStat())
-
-
+    
+    def signal(self):
+        sig = dict()
+        sig[self.stock] = 1
+        for i in range(len(self.etfs)):
+            sig[self.etfs[i]] = self.beta[i+1]
+        return sig

@@ -26,7 +26,7 @@ if __name__ == "__main__":
     #     print(ticker)
     #     cerebro1.adddata(stock,name=ticker)
     # for ticker in data.etf_list():
-    for ticker in ['VTV','VUG']:
+    for ticker in ['QUAL','USMV','VLUE','MTUM']:
         etf = data.cerebro_etf(ticker)
         print(ticker)
         etf.plotinfo.plot = False

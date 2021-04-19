@@ -70,15 +70,16 @@ class Coint:
     def powerStat(self):
         return abs(self.sr())**(self.adf_threshold - self.t_stat)
 
-    def signal(self, force=False):
+    def signal(self):
         sig = dict()
         multiplyer = 1
-        if (self.powerStat() < 1.25 and self.openPos) or force:
+        if (self.powerStat() < 1.25 and self.openPos):
             multiplyer = 0
             self.eliminate = True
         elif not self.openPos and self.powerStat() > 1.75:
             if self.sr() > 0:
                 multiplyer = -1
+                self.openPos = True
         else:
             return dict()
         sig[self.stock] = 1 * multiplyer

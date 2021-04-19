@@ -5,13 +5,13 @@ from statsmodels.tsa.stattools import adfuller
 from get_data import GetData
 
 class Coint:
-    def __init__(self,feed,feed_dict,stock,etfs,period,adr_threshold):
+    def __init__(self,feed,feed_dict,stock,etfs,period,adf_threshold):
         #should be called in sth like next() in strat
         #period in trading days
         self.eliminate = False
         self.openPos = False
         self.reference_price = dict()
-        self.adr_threshold = adr_threshold
+        self.adr_threshold = adf_threshold
         self.feed_dict = feed_dict
         self.stock = stock
         self.etfs = etfs

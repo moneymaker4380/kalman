@@ -57,8 +57,8 @@ class Strategy(bt.Strategy):
         pass
 
     def next(self):
+        stocks_list = [d._name for d in self.datas][4:]
         if ((not self.initBool) and (len(self) == 2820)):
-            stocks_list = [d._name for d in self.datas][4:]
             for i, d in enumerate(self.datas):
                 self.feed_dict[d._name] = i
             self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
@@ -83,7 +83,7 @@ class Strategy(bt.Strategy):
         elif((self.initBool) and (len(self) >= 2820)):
             # signals = [{'MSFT': 1, 'VTV': -0.5, 'VUG': -0.5}]  # Presented in ratios (stock comes first)
             signals = []
-            for ticker in list(self.coint_dict.keys()):
+            for ticker in list(stocks_list):
                 y = np.log(self.datas[self.feed_dict[ticker]].close[0]/self.coint_dict[ticker].reference_price[ticker])
                 x = [np.log(self.datas[self.feed_dict[etf]].close[0]/self.coint_dict[ticker].reference_price[etf]) for etf in self.coint_dict[ticker].etfs]
                 self.coint_dict[ticker].update_residual(np.array([x]), y)

@@ -67,7 +67,7 @@ class Coint:
         return abs(self.residuals[-1]/np.std(self.residuals,ddof=1))
 
     def powerStat(self):
-        return self.asr()**(self.adf_threshold - self.tStat())
+        return self.asr()**(self.adf_threshold - self.t_stat)
     
     def signal(self):
         sig = dict()

@@ -43,6 +43,8 @@ class Strategy(bt.Strategy):
         self.initBool = False
         self.inds = dict()
         self.feed_dict = dict()
+        self.coint_dict = dict()
+        self.powerStat = []
         self.current_pairs = [] #Assume pairs named by the stock in the pair
         for i, d in enumerate(self.datas):
             self.inds[d] = dict()
@@ -60,7 +62,14 @@ class Strategy(bt.Strategy):
                 self.feed_dict[d._name] = i
             self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             self.pair_ratio = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
-            coint = Coint(self,self.feed_dict,'MSFT',['VTV','VUG'],300,adr_threshold=-2.0)
+            for ticker in list(self.feed_dict.keys()):
+                coint = Coint(self,self.feed_dict,ticker,['VTV','VUG'],300,adr_threshold=-2.0)
+                if coint.asr() > 1 and coint.t_stat <= -2.0:
+                    self.powerStat.append(coint.powerStat())
+                else:
+                    self.powerStat.append(0)
+            for ticker in list(self.feed_dict.keys())[np.argsort(self.powerStat)[:15]]:
+                self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['VTV','VUG'],300,adr_threshold=-2.0)
             """
             print(coint.beta)
             print(coint.t_stat, coint.p_lags)
@@ -71,12 +80,9 @@ class Strategy(bt.Strategy):
             """
             self.initBool = True
         elif((self.initBool) and (len(self) >= 2820)):
-            # self.stat.write(str(self.datetime.datetime(ago=0)) + ',')
-            ############################################################
-            ############################################################
-            ########## DEAL WITH SIGNAL AND GENERATE TARGET POS ########
-            ############################################################
-            ############################################################
+            for ticker in stocks_list:
+
+
             signals = [{'MSFT':1,'VTV':-0.5,'VUG':-0.5}] #Presented in ratios (stock comes first)
             if len(signals)!=0:
                 #reset tar pos

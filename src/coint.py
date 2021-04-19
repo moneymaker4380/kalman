@@ -51,6 +51,7 @@ class Coint:
     def update_residual(self, x, y): #x horizontal is one observation
         x = np.insert(x,0,1,axis=1)
         self.residuals = np.append(self.residuals, (y-x.dot(self.beta))/np.sqrt(self.beta.dot(self.beta)+1))
+        self.adf(self.residuals)
         pass
 
     def sr(self):

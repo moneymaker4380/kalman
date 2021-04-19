@@ -67,7 +67,7 @@ class Strategy(bt.Strategy):
                     self.powerStat.append(coint.powerStat())
                 else:
                     self.powerStat.append(0)
-            for ticker in list(self.feed_dict.keys())[np.argsort(self.powerStat)[:15]]:
+            for ticker in np.array(self.feed_dict.keys())[np.argsort(self.powerStat)[-15:]]:
                 self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adr_threshold=-2.0)
             """
             print(coint.beta)
@@ -84,7 +84,7 @@ class Strategy(bt.Strategy):
             for ticker in list(self.coint_dict.keys()):
                 y = np.log(self.datas[self.feed_dict[ticker]].close[0]/self.coint_dict[ticker].reference_price[ticker])
                 x = [np.log(self.datas[self.feed_dict[etf]].close[0]/self.coint_dict[ticker].reference_price[etf]) for etf in self.coint_dict[ticker].etfs]
-                self.coint_dict[ticker].update_residual(np.array(x), y)
+                self.coint_dict[ticker].update_residual(np.array([x]), y)
                 signal = self.coint_dict[ticker].signal()
                 if len(signal) == 0:
                     signals.append(signal)

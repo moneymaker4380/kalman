@@ -67,7 +67,7 @@ class Strategy(bt.Strategy):
             self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             self.pair_ratio = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             self.pending_list, self.active_list = self.initialize(stocks_list)
-            for ticker in np.array(self.active_list)[np.argsort(self.powerStat)[-max(20,len(self.active_list)):][::-1]]:
+            for ticker in np.array(self.active_list)[np.argsort(self.powerStat)[-min(20,len(self.active_list)):][::-1]]:
                 self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
             # for ticker in stocks_list:
             #     coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=-2.0)
@@ -85,6 +85,7 @@ class Strategy(bt.Strategy):
             print(np.diag(kf.state_cov))
             print(kf.tStat())
             """
+            self.rebal_month = (self.datetime.datetime(ago=0).month + 6)%12
             self.initBool = True
             self.lastRebelance = len(self)
         elif((self.initBool) and (len(self) >= self.initDays)):
@@ -103,11 +104,23 @@ class Strategy(bt.Strategy):
             #             self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold=-2.0)
             # # signals = [{'MSFT': 1, 'VTV': -0.5, 'VUG': -0.5}]  # Presented in ratios (stock comes first)
             # self.lastRebelance = len(self)
-            print(self.datetime.datetime(ago=0))
-            self.pending_list , temp = self.initialize(self.pending_list)
-            self.active_list = self.active_list + temp
-            for ticker in np.array(temp)[np.argsort(self.powerStat)[-max(20,len(self.active_list)):][::-1]]:
-                self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
+            if (self.datetime.datetime(ago=0).month == self.rebal_month):
+                #rebalance
+                print(f'################### Rebalnceing on {self.datetime.datetime(ago=0)} ###################')
+                stocks_list = [d._name for d in self.datas][4:]
+                for i, d in enumerate(self.datas):
+                    self.feed_dict[d._name] = i
+                self.pending_list, self.active_list = self.initialize(stocks_list)
+                if len(self.active_list)>0:
+                    for ticker in np.array(self.active_list)[np.argsort(self.powerStat)[-min(20,len(self.active_list)):][::-1]]:
+                        self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
+                    self.rebal_month = (self.datetime.datetime(ago=0).month + 6)%12
+            else:
+                self.pending_list , temp = self.initialize(self.pending_list)
+                if len(temp)>0:
+                    self.active_list = self.active_list + temp
+                    for ticker in np.array(temp)[np.argsort(self.powerStat)[-min(20,len(self.active_list)):][::-1]]:
+                        self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
             signals = []
             for ticker in list(self.coint_dict.keys()):
                 y = np.log(self.datas[self.feed_dict[ticker]].close[0]/self.coint_dict[ticker].reference_price[ticker])

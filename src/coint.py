@@ -11,7 +11,7 @@ class Coint:
         self.eliminate = False
         self.openPos = False
         self.reference_price = dict()
-        self.adr_threshold = adf_threshold
+        self.adf_threshold = adf_threshold
         self.feed_dict = feed_dict
         self.stock = stock
         self.etfs = etfs

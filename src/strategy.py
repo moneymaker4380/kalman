@@ -59,9 +59,9 @@ class Strategy(bt.Strategy):
         pass
 
     def next(self):
-        stocks_list = [d._name for d in self.datas][4:]
         print(len(self))
         if ((not self.initBool) and (len(self) == self.initDays)):
+            stocks_list = [d._name for d in self.datas][4:]
             for i, d in enumerate(self.datas):
                 self.feed_dict[d._name] = i
             self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
@@ -108,6 +108,8 @@ class Strategy(bt.Strategy):
                 #rebalance
                 print(f'################### Rebalnceing on {self.datetime.datetime(ago=0)} ###################')
                 stocks_list = [d._name for d in self.datas][4:]
+                self.coint_dict = dict()
+                self.powerStat = []
                 for i, d in enumerate(self.datas):
                     self.feed_dict[d._name] = i
                 self.pending_list, self.active_list = self.initialize(stocks_list)
@@ -184,7 +186,7 @@ class Strategy(bt.Strategy):
         pending = []
         active = []
         for ticker in stocks:
-            if len(self.datas[self.feed_dict[ticker]].close) <300:
+            if pd.Series(self.datas[self.feed_dict[ticker]].close.array)[-300:].isnull().values.any():
                 pending.append(ticker)
             else:
                 coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=-2.0)

@@ -88,8 +88,6 @@ class Strategy(bt.Strategy):
                 signal = self.coint_dict[ticker].signal()
                 if len(signal) == 0:
                     signals.append(signal)
-                if self.coint_dict[ticker].eliminate:
-                    self.coint_dict.pop(ticker)
             if len(signals)!=0:
                 #reset tar pos
                 self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
@@ -125,6 +123,9 @@ class Strategy(bt.Strategy):
                     #if order is not None:
                         #order = self.broker.submit(order)
 
+            for ticker in list(self.coint_dict.keys()):
+                if self.coint_dict[ticker].eliminate:
+                    self.coint_dict.pop(ticker)
                 """
                 for i, d in enumerate(self.datas):
                     # self.log(f'{d._name} Close, {d.close[0]}')

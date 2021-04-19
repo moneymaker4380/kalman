@@ -83,12 +83,13 @@ class Strategy(bt.Strategy):
         elif((self.initBool) and (len(self) >= 2820)):
             # signals = [{'MSFT': 1, 'VTV': -0.5, 'VUG': -0.5}]  # Presented in ratios (stock comes first)
             signals = []
-            for ticker in list(stocks_list):
-                y = np.log(self.datas[self.feed_dict[ticker]].close[0]/self.coint_dict[ticker].reference_price[ticker])
+            for ticker in list(self.coint_dict.keys()):
+                y_p = self.coint_dict[ticker].reference_price[ticker]
+                y = np.log(self.datas[self.feed_dict[ticker]].close[0]/y_p)
                 x = [np.log(self.datas[self.feed_dict[etf]].close[0]/self.coint_dict[ticker].reference_price[etf]) for etf in self.coint_dict[ticker].etfs]
                 self.coint_dict[ticker].update_residual(np.array([x]), y)
                 signal = self.coint_dict[ticker].signal()
-                if len(signal) == 0:
+                if len(signal) > 0:
                     signals.append(signal)
             if len(signals)!=0:
                 #reset tar pos
@@ -96,7 +97,7 @@ class Strategy(bt.Strategy):
                 self.close_pairs = []
                 for signal in signals:
                     ##cannot pass as list
-                    if str(next(iter(signal))) not in self.current_pairs:
+                    if pd.Series(signal.keys())[0] not in self.current_pairs:
                         self.current_pairs.append(list(signal.keys())[0])
                         self.pair_ratio.loc[list(signal.keys())[0]] = [signal]
                     else:
@@ -119,7 +120,7 @@ class Strategy(bt.Strategy):
                         order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
                         print(order)
                         #order = self.broker.submit(order)
-                for tick in ['VTV','VUG']:
+                for tick in ['QUAL','USMV','VLUE','MTUM']:
                     order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
                     print(order)
                     #if order is not None:

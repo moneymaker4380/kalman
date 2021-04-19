@@ -8,6 +8,9 @@ class Coint:
     def __init__(self,feed,feed_dict,stock,etfs,period,adr_threshold):
         #should be called in sth like next() in strat
         #period in trading days
+        self.eliminate = False
+        self.openPos = False
+        self.reference_price = dict()
         self.adr_threshold = adr_threshold
         self.feed_dict = feed_dict
         self.stock = stock
@@ -27,6 +30,7 @@ class Coint:
 
     def log_ret(self,tick,feed,period):
         data = pd.Series(feed.datas[self.feed_dict[tick]].close.array)[-period:] #no timestamp combining list of Series
+        self.reference_price[tick] = data.iloc[0]
         ret = np.log(data/data.iloc[0])
         # pd.Series(ret, index=data.index, name=tick)
         return ret
@@ -67,7 +71,27 @@ class Coint:
     
     def signal(self):
         sig = dict()
-        sig[self.stock] = 1
+        multiplyer = 1
+        if self.powerStat() < 1.1:
+            if self.openPos:
+                multiplyer = 0
+                self.openPos = False
+            else:
+                multiplyer = 5
+            self.eliminate = True
+        else:
+            if not self.openPos and self.asr() > 2:
+                if self.sr() > 1:
+                    multiplyer = -1
+                self.openPos = True
+            elif self.openPos and self.asr() < 0.5:
+                multiplyer = 0
+                self.openPos = False
+            else:
+                multiplyer = 5
+        if multiplyer == 5:
+            return dict()
+        sig[self.stock] = 1 * multiplyer
         for i in range(len(self.etfs)):
-            sig[self.etfs[i]] = self.beta[i+1]
+            sig[self.etfs[i]] = -self.beta[i+1] * multiplyer
         return sig

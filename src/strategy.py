@@ -57,7 +57,6 @@ class Strategy(bt.Strategy):
 
     def next(self):
         if ((not self.initBool) and (len(self) == 2820)):
-            
             for i, d in enumerate(self.datas):
                 self.feed_dict[d._name] = i
             self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
@@ -80,10 +79,17 @@ class Strategy(bt.Strategy):
             """
             self.initBool = True
         elif((self.initBool) and (len(self) >= 2820)):
-            #for ticker in stocks_list:
-                #pass
-
-            signals = [{'MSFT':1,'VTV':-0.5,'VUG':-0.5}] #Presented in ratios (stock comes first)
+            # signals = [{'MSFT': 1, 'VTV': -0.5, 'VUG': -0.5}]  # Presented in ratios (stock comes first)
+            signals = []
+            for ticker in list(self.coint_dict.keys()):
+                y = np.log(self.datas[self.feed_dict[ticker]].close[0]/self.coint_dict[ticker].reference_price[ticker])
+                x = [np.log(self.datas[self.feed_dict[etf]].close[0]/self.coint_dict[ticker].reference_price[etf]) for etf in self.coint_dict[ticker].etfs]
+                self.coint_dict[ticker].update_residual(np.array(x), y)
+                signal = self.coint_dict[ticker].signal()
+                if len(signal) == 0:
+                    signals.append(signal)
+                if self.coint_dict[ticker].eliminate:
+                    self.coint_dict.pop(ticker)
             if len(signals)!=0:
                 #reset tar pos
                 self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
@@ -102,7 +108,7 @@ class Strategy(bt.Strategy):
                         self.tarpos.loc[tick] += self.pair_ratio.loc[pair][0][tick]/len(self.current_pairs)
                         print(self.datas[self.feed_dict[tick]])
                 #Close position of stocks
-                #self.tarpos = self.tarpos.astype('int') (No need int coz %?)
+                self.tarpos = self.tarpos.astype('int')
                 if len(self.close_pairs)>0:
                     for tick in self.close_pairs:
                         order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=0)

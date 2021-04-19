@@ -33,7 +33,7 @@ if __name__ == "__main__":
         cerebro1.adddata(etf,name=ticker)
 
     # ['PEP', 'KO', 'MCD']
-    for ticker in ['MSFT']:
+    for ticker in ['PEP', 'KO', 'MCD']:
         stock = data.cerebro_stock(ticker)
         print(ticker)
         stock.plotinfo.plot = False
@@ -50,7 +50,6 @@ if __name__ == "__main__":
 
     cerebro1.addstrategy(Strategy)
 
-    cerebro1.addanalyzer(bt.analyzers.Calmar, _name='Calmar')
     cerebro1.addanalyzer(bt.analyzers.SharpeRatio, _name='SharpeRatio')
     cerebro1.addanalyzer(bt.analyzers.DrawDown, _name='DD')
     cerebro1.addanalyzer(bt.analyzers.AnnualReturn, _name='Return')
@@ -68,7 +67,6 @@ if __name__ == "__main__":
     print('Cumulative Return:', run.analyzers.CumulativeReturn.get_analysis()[datetime(2020,12,31)])
     print('Sharpe Ratio:', run.analyzers.SharpeRatio.get_analysis()['sharperatio'])
     print('Maximum Drawdown:', run.analyzers.DD.get_analysis()['max']['drawdown'])
-    print('Calmar Ratio:', run.analyzers.Calmar.calmar)
     print('Annualized Volatility:', run.analyzers.Stats.get_analysis()['stddev'])
 
     #cerebro1.addanalyzer(bt.analyzers.PyFolio, _name='pyfolio')

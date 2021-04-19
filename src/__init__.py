@@ -29,12 +29,14 @@ if __name__ == "__main__":
     for ticker in ['VTV','VUG']:
         etf = data.cerebro_etf(ticker)
         print(ticker)
+        etf.plotinfo.plot = False
         cerebro1.adddata(etf,name=ticker)
 
     # ['PEP', 'KO', 'MCD']
     for ticker in ['MSFT']:
         stock = data.cerebro_stock(ticker)
         print(ticker)
+        stock.plotinfo.plot = False
         cerebro1.adddata(stock, name=ticker)
 
     # ko = data.cerebro_stock('KO')

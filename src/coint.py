@@ -8,7 +8,7 @@ class Coint:
     def __init__(self,feed,feed_dict,stock,etfs,period,adr_threshold):
         #should be called in sth like next() in strat
         #period in trading days
-        self.adr_threshold = self.adr_threshold
+        self.adr_threshold = adr_threshold
         self.feed_dict = feed_dict
         self.stock_ret = self.log_ret(stock,feed,period).ffill()
         ret_list = []
@@ -50,7 +50,7 @@ class Coint:
 
     def update_residual(self, x, y): #x horizontal is one observation
         x = np.insert(x,0,1,axis=1)
-        self.residuals = self.residuals.append(self.residuals, (y-x.dot(self.beta))/np.sqrt(self.beta.dot(self.beta)+1))
+        self.residuals = np.append(self.residuals, (y-x.dot(self.beta))/np.sqrt(self.beta.dot(self.beta)+1))
         pass
 
     def sr(self):

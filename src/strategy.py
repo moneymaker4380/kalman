@@ -60,7 +60,7 @@ class Strategy(bt.Strategy):
                 self.feed_dict[d._name] = i
             self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             self.pair_ratio = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
-            coint = Coint(self,self.feed_dict,'MSFT',['VTV','VUG'],300)
+            coint = Coint(self,self.feed_dict,'MSFT',['VTV','VUG'],300,adr_threshold=-2.0)
             """
             print(coint.beta)
             print(coint.t_stat, coint.p_lags)
@@ -101,17 +101,17 @@ class Strategy(bt.Strategy):
                     for tick in self.close_pairs:
                         order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=0)
                         print(order)
-                        order = self.broker.submit(order)
+                        #order = self.broker.submit(order)
                 if len(self.current_pairs)>0:
                     for tick in self.current_pairs:
                         order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
                         print(order)
-                        order = self.broker.submit(order)
+                        #order = self.broker.submit(order)
                 for tick in ['VTV','VUG']:
                     order = self.order_target_percent(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
                     print(order)
-                    if order is not None:
-                        order = self.broker.submit(order)
+                    #if order is not None:
+                        #order = self.broker.submit(order)
 
                 """
                 for i, d in enumerate(self.datas):

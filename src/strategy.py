@@ -114,7 +114,7 @@ class Strategy(bt.Strategy):
                             power_stat.append(-1)
                             continue
                         coint = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold = self.adf_threshold)
-                        if (coint.asr() > self.min_asr) and (coint.t_stat <= self.adf_threshold):
+                        if (abs(coint.sr()) > self.min_asr) and (coint.t_stat <= self.adf_threshold):
                             new_pair[ticker] = coint
                             power_stat.append(coint.powerStat())
                         else:
@@ -202,7 +202,7 @@ class Strategy(bt.Strategy):
             else:
                 coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=-2.0)
                 active.append(ticker)
-                if coint.asr() > 1 and coint.t_stat <= -2.0:
+                if abs(coint.sr()) > 1 and coint.t_stat <= -2.0:
                     self.powerStat.append(coint.t_stat)  #powerStat()
                 else:
                     self.powerStat.append(0)

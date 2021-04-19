@@ -71,26 +71,33 @@ class Strategy(bt.Strategy):
             self.pair_ratio = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             stocks_list = [d._name for d in self.datas][4:]
             self.pending_list, self.active_list = self.initialize(stocks_list)
-            power_stat = []
+            power_stat = dict()
             for ticker in self.active_list:
                 coint = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold=self.adf_threshold)
                 if abs(coint.sr()) > self.min_asr and coint.t_stat <= self.adf_threshold:
-                    power_stat.append(coint.powerStat())
-                else:
-                    power_stat.append(-1)
-            power_stat = np.array(power_stat)
-            accepted = np.argwhere(power_stat > -1)
-            accepted_order = np.array([accepted[np.argsort(power_stat[accepted])[::-1]].squeeze()])
+                    power_stat[ticker] = coint.powerStat()
+                    # power_stat.append(coint.powerStat())
+                # else:
+                    # power_stat.append(-1)
+            power_stat = dict(sorted(x.items(), key=lambda item: item[1], reverse=True))
+            accepted = list(power_stat.keys())
+            # power_stat = np.array(power_stat)
+            # accepted = np.argwhere(power_stat > -1)
+            # accepted_order = np.array([accepted[np.argsort(power_stat[accepted])[::-1]].squeeze()])
 
-            if len(accepted_order) > self.pairs_num:
-                tempticker = np.array(self.active_list)[accepted_order[:min(self.pairs_num,len(self.active_list))]]
+            if len(accepted) > self.pairs_num:
+                tempticker = accepted[:self.pairs_num]
             else:
-                tempticker = np.array(self.active_list)[accepted_order]
+                tempticker = accepted
+            #     tempticker = np.array(self.active_list)[accepted_order[:min(self.pairs_num,len(self.active_list))]]
+            # else:
+            #     tempticker = np.array(self.active_list)[accepted_order]
 
-            for ticker in tempticker:
-                self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold = self.adf_threshold)
-            if len(self.coint_dict.keys()) <= self.pairs_num/2:
-                self.stopFindPair = True
+            if len(tempticker) > 0:
+                for ticker in tempticker:
+                    self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold = self.adf_threshold)
+                if len(self.coint_dict.keys()) <= self.pairs_num/2:
+                    self.stopFindPair = True
             """
             print(coint.beta)
             print(coint.t_stat, coint.p_lags)
@@ -110,7 +117,7 @@ class Strategy(bt.Strategy):
                     self.feed_dict[d._name] = i
                 self.pending_list, self.active_list = self.initialize(stocks_list)
                 if len(self.active_list) > 0:
-                    power_stat = []
+                    power_stat = dict()
                     curr_pair = list(self.coint_dict.keys())
                     for ticker in self.active_list:
                         if ticker in curr_pair:
@@ -121,23 +128,23 @@ class Strategy(bt.Strategy):
                             power_stat.append(coint.powerStat())
                         else:
                             power_stat.append(-1)
-                    power_stat = np.array(power_stat)
-                    accepted = np.argwhere(power_stat > -1)
-                    accepted_order = np.array([accepted[np.argsort(power_stat[accepted])[::-1]].squeeze()])
+                    power_stat = dict(sorted(x.items(), key=lambda item: item[1], reverse=True))
+                    accepted = list(power_stat.keys())
 
-                    if len(accepted_order) > self.pairs_num:
-                        tempticker = np.array(self.active_list)[accepted_order[:min(self.pairs_num, len(self.active_list))]]
+                    if len(accepted) > self.pairs_num:
+                        tempticker = accepted[:self.pairs_num]
                     else:
-                        tempticker = np.array(self.active_list)[accepted_order]
+                        tempticker = accepted
 
-                    for ticker in tempticker:
-                        if len(self.coint_dict) >= self.pairs_num:
-                            break
-                        self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold = self.adf_threshold)
-                    if len(self.coint_dict) <= self.pairs_num / 2:
-                        self.stopFindPair = True
-                    else:
-                        self.stopFindPair = False
+                    if len(tempticker) > 0:
+                        for ticker in tempticker:
+                            if len(self.coint_dict) >= self.pairs_num:
+                                break
+                            self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold = self.adf_threshold)
+                        if len(self.coint_dict) <= self.pairs_num / 2:
+                            self.stopFindPair = True
+                        else:
+                            self.stopFindPair = False
                     self.last_rebel = len(self)
             signals = []
             # signals = [{'MSFT': 1, 'VTV': -0.5, 'VUG': -0.5}]  # Presented in ratios (stock comes first)

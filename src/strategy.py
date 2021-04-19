@@ -7,6 +7,7 @@ import csv
 from log_return import LogReturn
 from coint import Coint
 from kalman import Kalman
+from get_data import GetData
 
 class Strategy(bt.Strategy):
 
@@ -57,17 +58,18 @@ class Strategy(bt.Strategy):
 
     def next(self):
         if ((not self.initBool) and (len(self) == 2820)):
+            stocks_list = [d._name for d in self.datas][4:]
             for i, d in enumerate(self.datas):
                 self.feed_dict[d._name] = i
             self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             self.pair_ratio = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
-            for ticker in list(self.feed_dict.keys()):
+            for ticker in stocks_list:
                 coint = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adr_threshold=-2.0)
                 if coint.asr() > 1 and coint.t_stat <= -2.0:
                     self.powerStat.append(coint.powerStat())
                 else:
                     self.powerStat.append(0)
-            for ticker in np.array(self.feed_dict.keys())[np.argsort(self.powerStat)[-15:]]:
+            for ticker in np.array(stocks_list)[np.argsort(self.powerStat)[-15:]]:
                 self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adr_threshold=-2.0)
             """
             print(coint.beta)

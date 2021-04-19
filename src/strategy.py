@@ -51,7 +51,6 @@ class Strategy(bt.Strategy):
         self.inds = dict()
         self.feed_dict = dict()
         self.coint_dict = dict()
-        self.powerStat = []
         self.current_pairs = [] #Assume pairs named by the stock in the pair
         for i, d in enumerate(self.datas):
             self.inds[d] = dict()
@@ -63,22 +62,31 @@ class Strategy(bt.Strategy):
         pass
 
     def next(self):
-        stocks_list = [d._name for d in self.datas][4:]
         print(len(self))
         if ((not self.initBool) and (len(self) == self.init_days)):
             for i, d in enumerate(self.datas):
                 self.feed_dict[d._name] = i
             self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
             self.pair_ratio = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
+            stocks_list = [d._name for d in self.datas][4:]
+            self.pending_list, self.active_list = self.initialize(stocks_list)
             init_pair = []
-            for ticker in stocks_list:
-                coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=self.adf_threshold)
+            for ticker in self.active_list:
+                coint = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold=self.adf_threshold)
                 if abs(coint.sr()) > self.min_asr and coint.t_stat <= self.adf_threshold:
                     init_pair.append(coint.powerStat())
                 else:
-                    init_pair.append(0)
-            for ticker in np.array(stocks_list)[np.argsort(init_pair)[-self.pairs_num:][::-1]]:
-                self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=self.adf_threshold)
+                    init_pair.append(-1)
+            for ticker in np.array(self.active_list[np.argsort(init_pair)[-min(self.pairs_num,len(self.active_list)):][::-1]]:
+                self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300,adf_threshold=self.adf_threshold)
+            # for ticker in stocks_list:
+            #     coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=-2.0)
+            #     if coint.asr() > 1 and coint.t_stat <= -2.0:
+            #         self.powerStat.append(coint.t_stat)  #powerStat()
+            #     else:
+            #         self.powerStat.append(0)
+            # for ticker in np.array(stocks_list)[np.argsort(self.powerStat)[-20:][::-1]]:
+            #     self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
             """
             print(coint.beta)
             print(coint.t_stat, coint.p_lags)
@@ -89,7 +97,24 @@ class Strategy(bt.Strategy):
             """
             self.initBool = True
             self.last_rebel = len(self)
-        elif((self.initBool) and (len(self) >= self.init_days)):
+        elif (self.initBool and (len(self) >= self.init_days)):
+            if ((len(self.coint_dict.keys()) <= self.pairs_num/2) or (len(self) - self.last_rebel >= self.rebal_period)):
+                #rebalance
+                print(f'################### Rebalnceing on {self.datetime.datetime(ago=0)} ###################')
+                stocks_list = [d._name for d in self.datas][4:]
+                for i, d in enumerate(self.datas):
+                    self.feed_dict[d._name] = i
+                self.pending_list, self.active_list = self.initialize(stocks_list)
+                if len(self.active_list) > 0:
+                    for ticker in np.array(self.active_list)[np.argsort(self.powerStat)[-min(20,len(self.active_list)):][::-1]]:
+                        self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
+                    self.rebal_month = (self.datetime.datetime(ago=0).month + 6)%12
+            else:
+                self.pending_list , temp = self.initialize(self.pending_list)
+                if len(temp)>0:
+                    self.active_list = self.active_list + temp
+                    for ticker in np.array(temp)[np.argsort(self.powerStat)[-min(20,len(self.active_list)):][::-1]]:
+                        self.coint_dict[ticker] = Coint(self,self.feed_dict,ticker,['QUAL','USMV','VLUE','MTUM'],300,adf_threshold=-2.0)
             signals = []
             if ((len(self.coint_dict.keys()) <= self.pairs_num/2) or (len(self) - self.last_rebel >= self.rebal_period)):
                 new_pair = []
@@ -133,7 +158,7 @@ class Strategy(bt.Strategy):
                 for pair in self.current_pairs:
                     for tick in self.pair_ratio.loc[pair][0]:
                         self.tarpos.loc[tick] += self.pair_ratio.loc[pair][0][tick]/len(self.current_pairs)
-                        # print(self.datas[self.feed_dict[tick]])
+                        print(self.datas[self.feed_dict[tick]])
                 #Close position of stocks
                 self.tarpos = self.tarpos.astype('int')
                 if len(self.close_pairs)>0:
@@ -169,8 +194,20 @@ class Strategy(bt.Strategy):
             self.stat.write('\n')
             #print(self.positionsbyname['MSFT'])
     
-    def close_pos(self,signal):
-        pass
+    def initialize(self,stocks):
+        pending = []
+        active = []
+        for ticker in stocks:
+            if len(self.datas[self.feed_dict[ticker]].close) <300:
+                pending.append(ticker)
+            else:
+                coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=-2.0)
+                active.append(ticker)
+                if coint.asr() > 1 and coint.t_stat <= -2.0:
+                    self.powerStat.append(coint.t_stat)  #powerStat()
+                else:
+                    self.powerStat.append(0)
+        return pending, active
     
     def stop(self):
 

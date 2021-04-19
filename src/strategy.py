@@ -69,7 +69,7 @@ class Strategy(bt.Strategy):
             for ticker in stocks_list:
                 coint = Coint(self, self.feed_dict, ticker, ['QUAL','USMV','VLUE','MTUM'], 300, adf_threshold=-2.0)
                 if coint.asr() > 1 and coint.t_stat <= -2.0:
-                    self.powerStat.append(coint.powerStat())
+                    self.powerStat.append(coint.t_stat)  #powerStat()
                 else:
                     self.powerStat.append(0)
             for ticker in np.array(stocks_list)[np.argsort(self.powerStat)[-20:][::-1]]:
@@ -85,21 +85,21 @@ class Strategy(bt.Strategy):
             self.initBool = True
             self.lastRebelance = len(self)
         elif((self.initBool) and (len(self) >= self.initDays)):
-            if ((len(self.coint_dict.keys()) < 20) or (len(self) - self.lastRebelance >= 126)):
-                tmp_new = []
-                for ticker in stocks_list:
-                    coint = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold=-2.0)
-                    if coint.asr() > 1 and coint.t_stat <= -2.0:
-                        tmp_new.append(coint.powerStat())
-                    else:
-                        tmp_new.append(0)
-                for ticker in np.array(stocks_list)[np.argsort(tmp_new)[-20:][::-1]]:
-                    if len(self.coint_dict) >= 20:
-                        break
-                    if ticker not in list(self.coint_dict.keys()):
-                        self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold=-2.0)
-            # signals = [{'MSFT': 1, 'VTV': -0.5, 'VUG': -0.5}]  # Presented in ratios (stock comes first)
-            self.lastRebelance = len(self)
+            # if ((len(self.coint_dict.keys()) < 10) or (len(self) - self.lastRebelance >= 126)):
+            #     tmp_new = []
+            #     for ticker in stocks_list:
+            #         coint = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold=-2.0)
+            #         if coint.asr() > 1 and coint.t_stat <= -2.0:
+            #             tmp_new.append(coint.powerStat())
+            #         else:
+            #             tmp_new.append(0)
+            #     for ticker in np.array(stocks_list)[np.argsort(tmp_new)[-20:][::-1]]:
+            #         if len(self.coint_dict) >= 20:
+            #             break
+            #         if ticker not in list(self.coint_dict.keys()):
+            #             self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold=-2.0)
+            # # signals = [{'MSFT': 1, 'VTV': -0.5, 'VUG': -0.5}]  # Presented in ratios (stock comes first)
+            # self.lastRebelance = len(self)
             signals = []
             for ticker in list(self.coint_dict.keys()):
                 y = np.log(self.datas[self.feed_dict[ticker]].close[0]/self.coint_dict[ticker].reference_price[ticker])

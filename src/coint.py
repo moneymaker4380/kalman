@@ -75,18 +75,19 @@ class Coint:
         sig = dict()
         multiplyer = 1
         if self.t_stat < -2.0:
-            if self.openPos:
-                multiplyer = 0
-                self.openPos = False
-            else:
-                multiplyer = 5
-            self.eliminate = True
+            # if self.openPos:
+            #     multiplyer = 0
+            #     self.openPos = False
+            # else:
+            #     multiplyer = 5
+            # self.eliminate = True
+            x = 1
         else:
-            if not self.openPos and self.asr() > 1.5:
-                if self.sr() < 0:
+            if not self.openPos and self.asr() > 2:
+                if self.sr() > 0:
                     multiplyer = -1
                 self.openPos = True
-            elif self.openPos and self.asr() < 0.5:
+            elif self.openPos and self.asr() < 0.75:
                 multiplyer = 0
                 self.openPos = False
             else:

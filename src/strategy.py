@@ -157,12 +157,13 @@ class Strategy(bt.Strategy):
             if len(signals)!=0:
                 #reset tar pos
                 self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
+                # self.excess = pd.Series(np.zeros(4),index = list(self.feed_dict.keys())[:4])
                 self.close_pairs = []
                 new_pairs = []
                 for signal in signals:
                     ##cannot pass as list
                     #print(signal)
-                    if pd.Series(list(signal.keys()))[0] not in self.current_pairs:
+                    if pd.Series(list(signal.keys())).iloc[0] not in self.current_pairs:
                         self.current_pairs.append(list(signal.keys())[0])
                         self.pair_ratio.loc[list(signal.keys())[0]] = [signal]
                         new_pairs.append(signal)
@@ -176,8 +177,17 @@ class Strategy(bt.Strategy):
                 #self.tarpos = self.tarpos.astype('int')
                 if len(self.close_pairs)>0:
                     for tick in self.close_pairs:
-                        order = self.order_target_value(self.datas[self.feed_dict[tick]],target=0)
-                        print(order)
+                        for name, amount in self.coint_dict[tick].openSize.items():
+                            order_amount = amount*-1
+                            if name in ['QUAL','USMV','VLUE','MTUM']:
+                                self.tarpos.loc[tick] += self.datas[self.feed_dict[tick]].close[0] * order_amount
+                            else:
+                                self.tarpos.loc[tick] = 0
+                            # if order_amount > 0:
+                            #     order = self.buy(size=order_amount)
+                            # else:
+                            #     order = self.sell(size=order_amount)
+                            # print(order)
                     self.vacancy = self.vacancy + len(self.close_pairs)
                         #order = self.broker.submit(order)
 
@@ -187,19 +197,28 @@ class Strategy(bt.Strategy):
                 if len(signals) - len(self.close_pairs) > 0:
                     self.vacancy = self.vacancy - (len(signals) - len(self.close_pairs))
 
+                etf_amount = pd.Series(np.zeros(4),index = list(self.feed_dict.keys())[:4])
                 for pair in new_pairs:
+                    openSize = dict()
                     total_beta = sum(np.abs(list(pair.values())))
                     unit = nominal/total_beta
                     for tick, beta in pair.items():
                         self.tarpos.loc[tick] += unit*beta
+                        openSize[tick] = (unit*beta) // self.datas[self.feed_dict[tick]].close[0]
+                        if tick in ['QUAL','USMV','VLUE','MTUM']:
+                            etf_amount.loc[tick] += openSize[tick]
+                    self.coint_dict[list(pair.keys())[0]].openSize = openSize
 
-                if len(self.current_pairs)>0:
-                    for tick in self.current_pairs:
+                if len(new_pairs)>0:
+                    for tick in new_pairs:
                         order = self.order_target_value(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
                         print(order)
                         #order = self.broker.submit(order)
                 for tick in ['QUAL','USMV','VLUE','MTUM']:
-                    order = self.order_target_value(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
+                    if etf_amount.loc[tick] > 0:
+                        order = self.buy(size = etf_amount.loc[tick])
+                    else:
+                        order = self.sell(size = etf_amount.loc[tick])
                     print(order)
                     #if order is not None:
                         #order = self.broker.submit(order)

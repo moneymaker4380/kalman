@@ -10,6 +10,7 @@ class Coint:
         #period in trading days
         self.eliminate = False
         self.openPos = False
+        self.openSize = dict()
         self.nan_presence = False
         self.reference_price = dict()
         self.adf_threshold = adf_threshold
@@ -82,8 +83,8 @@ class Coint:
         sig = dict()
         multiplyer = 1
         if (self.powerStat() < 1.1 and self.openPos):
-            multiplyer = 0
             self.eliminate = True
+            return self.openSize
         elif not self.openPos and self.powerStat() > 1.3:
             if self.sr() > 0:
                 multiplyer = -1

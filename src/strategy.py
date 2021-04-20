@@ -207,7 +207,7 @@ class Strategy(bt.Strategy):
                 if len(signals) - len(self.close_pairs) > 0:
                     self.vacancy = self.vacancy - (len(signals) - len(self.close_pairs))
 
-                for pair in self.current_pairs:
+                for pair in new_pairs:
                     openSize = dict()
                     total_beta = sum(np.abs(list(pair.values())))
                     unit = nominal/total_beta

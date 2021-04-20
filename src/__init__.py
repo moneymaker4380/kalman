@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     # ['PEP', 'KO', 'MCD']
     # for ticker in ['PEP', 'KO', 'MCD']:
-    for ticker in data.get_stock_list()[-300:]:
+    for ticker in data.get_stock_list()[-30:]:
         stock = data.cerebro_stock(ticker)
         print(ticker)
         stock.plotinfo.plot = False

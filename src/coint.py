@@ -93,8 +93,9 @@ class Coint:
             return dict()
         sig[self.stock] = 1 * multiplyer
         for i in range(len(self.etfs)):
-            sig[self.etfs[i]] = -self.beta[i+1] * multiplyer
+            sig[self.etfs[i]] = -self.beta[i + 1] * multiplyer
         return sig
+
 
     def validation_nan(self):
         self.nan_presence = np.isnan(self.residuals).any()

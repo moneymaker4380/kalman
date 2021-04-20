@@ -64,7 +64,7 @@ class Coint:
 
     def update_residual(self, x, y): #x horizontal is one observation
         x = np.insert(x,0,1,axis=1)
-        self.residuals = np.append(self.residuals, (y-x.dot(self.beta))/np.sqrt(self.beta.dot(self.beta)+1))
+        self.residuals = np.append(self.residuals, (y-x.dot(self.beta))/np.sqrt(self.beta[1:].dot(self.beta[1:])+1))
         if len(self.residuals) > self.residuals_size:
             self.residuals = self.residuals[-self.residuals_size:]
         self.validation_nan()

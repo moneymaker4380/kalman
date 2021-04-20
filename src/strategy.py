@@ -143,7 +143,7 @@ class Strategy(bt.Strategy):
                         self.stopFindPair = False
                     if len(self.coint_dict) <= (self.pairs_num / 2):
                         self.stopFindPair = True
-                self.last_rebel = len(self)
+                    self.last_rebel = len(self)
             signals = []
             # signals = [{'MSFT': 1, 'VTV': -0.5, 'VUG': -0.5}]  # Presented in ratios (stock comes first)
 

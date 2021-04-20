@@ -81,6 +81,7 @@ class Strategy(bt.Strategy):
                     continue
                 if abs(coint.sr()) > self.min_asr and coint.t_stat <= self.adf_threshold:
                     power_stat[ticker] = coint.powerStat()
+                print(ticker, abs(coint.sr()))
             power_stat = dict(sorted(power_stat.items(), key=lambda item: item[1], reverse=True))
             accepted = list(power_stat.keys())
             # power_stat = np.array(power_stat)
@@ -129,6 +130,7 @@ class Strategy(bt.Strategy):
                             continue
                         if (abs(coint.sr()) > self.min_asr) and (coint.t_stat <= self.adf_threshold):
                             power_stat[ticker] = coint.powerStat()
+                        print(ticker, abs(coint.sr()))
                     power_stat = dict(sorted(power_stat.items(), key=lambda item: item[1], reverse=True))
                     accepted = list(power_stat.keys())
 

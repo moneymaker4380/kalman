@@ -82,18 +82,18 @@ class Coint:
     def signal(self):
         sig = dict()
         multiplyer = 1
-        if (self.powerStat() < 1.1 and self.openPos):
-            self.eliminate = True
-            return self.openSize
-        elif not self.openPos and self.powerStat() > 1.3:
+        if not self.openPos and (self.powerStat() > 1.3):
             if self.sr() > 0:
                 multiplyer = -1
             self.openPos = True
-        else:
-            return dict()
-        sig[self.stock] = 1 * multiplyer
-        for i in range(len(self.etfs)):
-            sig[self.etfs[i]] = -self.beta[i + 1] * multiplyer
+            sig[self.stock] = 1 * multiplyer
+            for i in range(len(self.etfs)):
+                sig[self.etfs[i]] = -self.beta[i + 1] * multiplyer
+        elif (self.powerStat() < 1.1):
+            if not (self.t_stat < self.adf_threshold):
+                self.eliminate = True
+            if self.openPos:
+                return self.openSize
         return sig
 
 

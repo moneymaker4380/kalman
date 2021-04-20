@@ -16,7 +16,6 @@ class Coint:
         self.feed_dict = feed_dict
         self.stock = stock
         self.etfs = etfs
-
         self.stock_ret = self.log_ret(stock,feed,period).ffill()
         ret_list = []
         for etf in etfs:
@@ -27,10 +26,9 @@ class Coint:
         self.residuals = np.array([])
         self.regression()
         self.update_residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy())
-        if self.validation_nan():
+        if self.nan_presence:
             return
         # self.residuals = pd.DataFrame(self.residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy()), index=self.stock_ret.index)
-
         self.res_std = np.std(self.residuals,ddof=1)
         print(self.stock,self.powerStat(),self.t_stat)
         pass
@@ -68,6 +66,9 @@ class Coint:
         self.residuals = np.append(self.residuals, (y-x.dot(self.beta))/np.sqrt(self.beta.dot(self.beta)+1))
         if len(self.residuals) > self.residuals_size:
             self.residuals = self.residuals[-self.residuals_size:]
+        self.validation_nan()
+        if self.nan_presence:
+            return
         self.adf(self.residuals)
         pass
 
@@ -95,4 +96,4 @@ class Coint:
         return sig
 
     def validation_nan(self):
-        return np.isnan(self.residuals).any()
+        self.nan_presence = np.isnan(self.residuals).any()

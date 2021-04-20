@@ -181,9 +181,9 @@ class Strategy(bt.Strategy):
                         for name, amount in self.coint_dict[tick].openSize.items():
                             order_amount = amount*-1
                             if name in ['QUAL','USMV','VLUE','MTUM']:
-                                etf_amount.loc[tick] += order_amount
+                                etf_amount.loc[name] += order_amount
                             else:
-                                self.tarpos.loc[tick] = 0
+                                self.tarpos.loc[name] = 0
                             # if order_amount > 0:
                             #     order = self.buy(size=order_amount)
                             # else:
@@ -212,15 +212,15 @@ class Strategy(bt.Strategy):
                 if len(new_pairs)>0:
                     for signal in new_pairs:
                         tick = list(signal.keys())[0]
-                        order = self.order_target_value(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
+                        order = self.order_target_value(data = self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
                         print(order)
                         #order = self.broker.submit(order)
-                for tick in ['QUAL','USMV','VLUE','MTUM']:
-                    if etf_amount.loc[tick] > 0:
-                        order = self.buy(size = abs(etf_amount.loc[tick]))
-                    else:
-                        order = self.sell(size = abs(etf_amount.loc[tick]))
-                    print(order)
+                    for tick in ['QUAL','USMV','VLUE','MTUM']:
+                        if etf_amount.loc[tick] > 0:
+                            order = self.buy(data = self.datas[self.feed_dict[tick]], size = abs(etf_amount.loc[tick]))
+                        else:
+                            order = self.sell(data = self.datas[self.feed_dict[tick]],size = abs(etf_amount.loc[tick]))
+                        print(order)
                     #if order is not None:
                         #order = self.broker.submit(order)
 

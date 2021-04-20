@@ -99,8 +99,8 @@ class Strategy(bt.Strategy):
             if len(tempticker) > 0:
                 for ticker in tempticker:
                     self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold = self.adf_threshold)
-                if len(self.coint_dict.keys()) <= self.pairs_num/2:
-                    self.stopFindPair = True
+                # if len(self.coint_dict.keys()) <= self.pairs_num/2:
+                    # self.stopFindPair = True
             """
             print(coint.beta)
             print(coint.t_stat, coint.p_lags)
@@ -144,9 +144,9 @@ class Strategy(bt.Strategy):
                             if len(self.coint_dict) >= self.pairs_num:
                                 break
                             self.coint_dict[ticker] = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold = self.adf_threshold)
-                        self.stopFindPair = False
-                    if len(self.coint_dict) <= (self.pairs_num / 2):
-                        self.stopFindPair = True
+                        # self.stopFindPair = False
+                    # if len(self.coint_dict) <= (self.pairs_num / 2):
+                        # self.stopFindPair = True
                     self.last_rebel = len(self)
             signals = []
             # signals = [{'MSFT': 1, 'VTV': -0.5, 'VUG': -0.5}]  # Presented in ratios (stock comes first)

@@ -88,7 +88,7 @@ class Coint:
         elif not self.openPos and self.powerStat() > 1.3:
             if self.sr() > 0:
                 multiplyer = -1
-                self.openPos = True
+            self.openPos = True
         else:
             return dict()
         sig[self.stock] = 1 * multiplyer

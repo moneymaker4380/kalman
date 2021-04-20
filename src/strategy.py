@@ -41,7 +41,7 @@ class Strategy(bt.Strategy):
         self.vacancy = self.pairs_num
         self.init_days = 2520
         self.last_rebel = 0
-        self.rebal_period = 30
+        self.rebal_period = 1
         self.min_asr = 1
         self.pair_kalman = {}
         self.pair_betas = {}
@@ -176,14 +176,20 @@ class Strategy(bt.Strategy):
                         # print(self.datas[self.feed_dict[tick]])
                 #Close position of stocks
                 #self.tarpos = self.tarpos.astype('int')
+                print("Close: ", self.close_pairs)
+                print("Open: ", new_pairs)
+                print(signals)
+
                 if len(self.close_pairs)>0:
                     for tick in self.close_pairs:
+                        print(self.coint_dict[tick].openSize)
                         for name, amount in self.coint_dict[tick].openSize.items():
                             order_amount = amount*-1
                             if name in ['QUAL','USMV','VLUE','MTUM']:
                                 etf_amount.loc[name] += order_amount
                             else:
                                 self.tarpos.loc[name] = 0
+                        print(etf_amount)
                             # if order_amount > 0:
                             #     order = self.buy(size=order_amount)
                             # else:
@@ -195,6 +201,7 @@ class Strategy(bt.Strategy):
                 curr_cash = self.broker.getcash()
                 nominal = curr_cash/self.vacancy
 
+
                 if len(signals) - len(self.close_pairs) > 0:
                     self.vacancy = self.vacancy - (len(signals) - len(self.close_pairs))
 
@@ -205,22 +212,25 @@ class Strategy(bt.Strategy):
                     for tick, beta in pair.items():
                         self.tarpos.loc[tick] += unit*beta
                         openSize[tick] = (unit*beta) // self.datas[self.feed_dict[tick]].close[0]
+
                         if tick in ['QUAL','USMV','VLUE','MTUM']:
                             etf_amount.loc[tick] += openSize[tick]
                     self.coint_dict[list(pair.keys())[0]].openSize = openSize
+                    print(list(pair.keys())[0], self.coint_dict[list(pair.keys())[0]].openSize)
 
                 if len(new_pairs)>0:
                     for signal in new_pairs:
                         tick = list(signal.keys())[0]
                         order = self.order_target_value(data = self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
-                        print(order)
+                        #print(order)
                         #order = self.broker.submit(order)
                     for tick in ['QUAL','USMV','VLUE','MTUM']:
                         if etf_amount.loc[tick] > 0:
                             order = self.buy(data = self.datas[self.feed_dict[tick]], size = abs(etf_amount.loc[tick]))
                         else:
                             order = self.sell(data = self.datas[self.feed_dict[tick]],size = abs(etf_amount.loc[tick]))
-                        print(order)
+                        #print(order)
+
                     #if order is not None:
                         #order = self.broker.submit(order)
 

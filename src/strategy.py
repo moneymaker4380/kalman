@@ -234,7 +234,7 @@ class Strategy(bt.Strategy):
                             order = self.buy(data = self.datas[self.feed_dict[tick]], size = abs(etf_amount.loc[tick]))
                         else:
                             order = self.sell(data = self.datas[self.feed_dict[tick]],size = abs(etf_amount.loc[tick]))
-                            self.positionMonitor.loc[len(self), tick] = etf_amount[tick]
+                        self.positionMonitor.loc[len(self), tick] = etf_amount[tick]
                         #print(order)
 
                     #if order is not None:

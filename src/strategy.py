@@ -190,7 +190,7 @@ class Strategy(bt.Strategy):
                             if name in ['QUAL','USMV','VLUE','MTUM']:
                                 etf_amount.loc[name] += order_amount
                             else:
-                                self.tarpos.loc[name] = 0
+                                order = self.order_target_value(data = self.datas[self.feed_dict[name]],target=0)
                                 self.positionMonitor.loc[len(self), name] = order_amount
                         print(etf_amount)
                             # if order_amount > 0:
@@ -207,7 +207,7 @@ class Strategy(bt.Strategy):
                 if len(signals) - len(self.close_pairs) > 0:
                     self.vacancy = self.vacancy - (len(signals) - len(self.close_pairs))
 
-                for pair in new_pairs:
+                for pair in self.current_pairs:
                     openSize = dict()
                     total_beta = sum(np.abs(list(pair.values())))
                     unit = nominal/total_beta
@@ -228,7 +228,7 @@ class Strategy(bt.Strategy):
                         #print(order)
                         #order = self.broker.submit(order)
 
-                if len(etf_amount) > 0:
+                if np.any(etf_amount != 0):
                     for tick in ['QUAL','USMV','VLUE','MTUM']:
                         if etf_amount.loc[tick] > 0:
                             order = self.buy(data = self.datas[self.feed_dict[tick]], size = abs(etf_amount.loc[tick]))

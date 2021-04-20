@@ -157,6 +157,7 @@ class Strategy(bt.Strategy):
             if len(signals)!=0:
                 #reset tar pos
                 self.tarpos = pd.Series(np.zeros(len(self.feed_dict)),index = self.feed_dict.keys())
+                etf_amount = pd.Series(np.zeros(4), index=list(self.feed_dict.keys())[:4])
                 # self.excess = pd.Series(np.zeros(4),index = list(self.feed_dict.keys())[:4])
                 self.close_pairs = []
                 new_pairs = []
@@ -180,7 +181,7 @@ class Strategy(bt.Strategy):
                         for name, amount in self.coint_dict[tick].openSize.items():
                             order_amount = amount*-1
                             if name in ['QUAL','USMV','VLUE','MTUM']:
-                                self.tarpos.loc[tick] += self.datas[self.feed_dict[tick]].close[0] * order_amount
+                                etf_amount.loc[tick] += order_amount
                             else:
                                 self.tarpos.loc[tick] = 0
                             # if order_amount > 0:
@@ -197,7 +198,6 @@ class Strategy(bt.Strategy):
                 if len(signals) - len(self.close_pairs) > 0:
                     self.vacancy = self.vacancy - (len(signals) - len(self.close_pairs))
 
-                etf_amount = pd.Series(np.zeros(4),index = list(self.feed_dict.keys())[:4])
                 for pair in new_pairs:
                     openSize = dict()
                     total_beta = sum(np.abs(list(pair.values())))
@@ -217,9 +217,9 @@ class Strategy(bt.Strategy):
                         #order = self.broker.submit(order)
                 for tick in ['QUAL','USMV','VLUE','MTUM']:
                     if etf_amount.loc[tick] > 0:
-                        order = self.buy(size = etf_amount.loc[tick])
+                        order = self.buy(size = abs(etf_amount.loc[tick]))
                     else:
-                        order = self.sell(size = etf_amount.loc[tick])
+                        order = self.sell(size = abs(etf_amount.loc[tick]))
                     print(order)
                     #if order is not None:
                         #order = self.broker.submit(order)

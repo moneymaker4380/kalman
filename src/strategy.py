@@ -210,7 +210,8 @@ class Strategy(bt.Strategy):
                     self.coint_dict[list(pair.keys())[0]].openSize = openSize
 
                 if len(new_pairs)>0:
-                    for tick in new_pairs:
+                    for signal in new_pairs:
+                        tick = list(signal.keys())[0]
                         order = self.order_target_value(self.datas[self.feed_dict[tick]],target=self.tarpos.loc[tick])
                         print(order)
                         #order = self.broker.submit(order)

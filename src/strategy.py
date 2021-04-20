@@ -125,6 +125,8 @@ class Strategy(bt.Strategy):
                             # power_stat.append(-1)
                             continue
                         coint = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold = self.adf_threshold)
+                        if coint is None:
+                            continue
                         if (abs(coint.sr()) > self.min_asr) and (coint.t_stat <= self.adf_threshold):
                             power_stat[ticker] = coint.powerStat()
                         # else:

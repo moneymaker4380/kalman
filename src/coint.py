@@ -25,6 +25,8 @@ class Coint:
         self.residuals = np.array([])
         self.regression()
         self.update_residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy())
+        if self.validation_nan():
+            return
         # self.residuals = pd.DataFrame(self.residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy()), index=self.stock_ret.index)
         self.adf(self.residuals)
         self.res_std = np.std(self.residuals,ddof=1)
@@ -89,3 +91,6 @@ class Coint:
         for i in range(len(self.etfs)):
             sig[self.etfs[i]] = -self.beta[i+1] * multiplyer
         return sig
+
+    def validation_nan(self):
+        return np.isnan(self.residuals).any()

@@ -75,11 +75,10 @@ class Strategy(bt.Strategy):
             power_stat = dict()
             for ticker in self.active_list:
                 coint = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold=self.adf_threshold)
+                if coint is None:
+                    continue
                 if abs(coint.sr()) > self.min_asr and coint.t_stat <= self.adf_threshold:
                     power_stat[ticker] = coint.powerStat()
-                    # power_stat.append(coint.powerStat())
-                # else:
-                    # power_stat.append(-1)
             power_stat = dict(sorted(power_stat.items(), key=lambda item: item[1], reverse=True))
             accepted = list(power_stat.keys())
             # power_stat = np.array(power_stat)
@@ -122,15 +121,12 @@ class Strategy(bt.Strategy):
                     curr_pair = list(self.coint_dict.keys())
                     for ticker in self.active_list:
                         if ticker in curr_pair:
-                            # power_stat.append(-1)
                             continue
                         coint = Coint(self, self.feed_dict, ticker, ['QUAL', 'USMV', 'VLUE', 'MTUM'], 300, adf_threshold = self.adf_threshold)
                         if coint is None:
                             continue
                         if (abs(coint.sr()) > self.min_asr) and (coint.t_stat <= self.adf_threshold):
                             power_stat[ticker] = coint.powerStat()
-                        # else:
-                        #     power_stat.append(-1)
                     power_stat = dict(sorted(power_stat.items(), key=lambda item: item[1], reverse=True))
                     accepted = list(power_stat.keys())
 

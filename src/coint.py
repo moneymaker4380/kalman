@@ -10,11 +10,13 @@ class Coint:
         #period in trading days
         self.eliminate = False
         self.openPos = False
+        self.nan_presence = False
         self.reference_price = dict()
         self.adf_threshold = adf_threshold
         self.feed_dict = feed_dict
         self.stock = stock
         self.etfs = etfs
+
         self.stock_ret = self.log_ret(stock,feed,period).ffill()
         ret_list = []
         for etf in etfs:
@@ -28,7 +30,7 @@ class Coint:
         if self.validation_nan():
             return
         # self.residuals = pd.DataFrame(self.residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy()), index=self.stock_ret.index)
-        self.adf(self.residuals)
+
         self.res_std = np.std(self.residuals,ddof=1)
         print(self.stock,self.powerStat(),self.t_stat)
         pass
@@ -70,7 +72,7 @@ class Coint:
         pass
 
     def sr(self):
-        return self.residuals[-1]/self.residuals.std()
+        return self.residuals[-1]/self.residuals.std(ddof=1)
 
     def powerStat(self):
         return abs(self.sr())**(self.adf_threshold - self.t_stat)

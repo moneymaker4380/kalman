@@ -191,7 +191,7 @@ class Strategy(bt.Strategy):
                     total_beta = sum(np.abs(list(pair.values())))
                     unit = nominal/total_beta
                     for tick, beta in pair.items():
-                        self.tarpos.loc[tick] = unit*beta
+                        self.tarpos.loc[tick] += unit*beta
 
                 if len(self.current_pairs)>0:
                     for tick in self.current_pairs:

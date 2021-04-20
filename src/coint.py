@@ -30,7 +30,7 @@ class Coint:
             return
         # self.residuals = pd.DataFrame(self.residual(x=self.etf_ret.to_numpy(), y=self.stock_ret.to_numpy()), index=self.stock_ret.index)
         self.res_std = np.std(self.residuals,ddof=1)
-        print(self.stock,self.powerStat(),self.t_stat)
+        #print(self.stock,self.powerStat(),self.t_stat)
         pass
 
     def log_ret(self,tick,feed,period):

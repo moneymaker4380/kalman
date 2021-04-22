@@ -93,6 +93,7 @@ class Coint:
             if not (self.t_stat < self.adf_threshold):
                 self.eliminate = True
             if self.openPos:
+                self.openPos = False
                 return self.openSize
         return sig
 
